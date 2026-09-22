@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>All Tour Details | Two Souls Travel</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    html { scroll-behavior: smooth; }
+    .slider-track { transition: transform 0.6s ease-in-out; }
+    .city-card { transition: all 0.3s ease; }
+    .city-card:hover { transform: translateY(-6px); }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-gray-800">
+
+  <!-- NAVBAR -->
+  <header class="bg-[#0B1F3A] text-white sticky top-0 z-50 shadow-lg">
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="./image/logo.png" class="w-12 h-12 object-contain" alt="Two Souls Travel">
+        <div>
+          <h1 class="text-xl font-bold">Two Souls Travel</h1>
+          <p class="text-xs text-sky-300">Travel Together, Create Memories</p>
+        </div>
+      </a>
+
+      <div class="hidden md:flex gap-7">
+        <a href="index.html" class="hover:text-sky-300">Home</a>
+        <a href="tours.html" class="text-sky-300">Tours</a>
+        <a href="my-bookings.html" class="hover:text-sky-300">My Bookings</a>
+        <a href="login.html" class="hover:text-sky-300">Login</a>
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- PAGE HERO -->
+  <section class="bg-gradient-to-r from-[#0B1F3A] to-sky-700 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-16 text-center">
+      <p class="text-sky-200 font-semibold uppercase tracking-widest">Explore Incredible India</p>
+      <h1 class="text-4xl md:text-6xl font-bold mt-4">Tour Details & Travel Stories</h1>
+      <p class="max-w-3xl mx-auto mt-5 text-slate-200 text-lg">
+        Explore famous locations, their history and complete travel plans
+        across India's most beautiful destinations.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- LOCATION SLIDER -->
+  <section class="max-w-7xl mx-auto px-6 py-14">
+
+    <div class="text-center mb-8">
+      <p class="text-sky-500 font-semibold uppercase">Featured Locations</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-[#0B1F3A]">Discover Famous Places</h2>
+    </div>
+
+    <div class="relative overflow-hidden rounded-3xl shadow-xl bg-white">
+
+      <div id="sliderTrack" class="flex slider-track"></div>
+
+      <button id="prevBtn"
+        class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-[#0B1F3A] w-12 h-12 rounded-full shadow-lg">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+
+      <button id="nextBtn"
+        class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-[#0B1F3A] w-12 h-12 rounded-full shadow-lg">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+
+      <div id="sliderDots" class="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2"></div>
+
+    </div>
+  </section>
+
+
+  <!-- SELECTED CITY DETAILS -->
+  <section class="max-w-7xl mx-auto px-6 pb-16">
+
+    <div class="text-center mb-12">
+      <p class="text-orange-500 font-semibold uppercase">Complete Travel Plans</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-[#0B1F3A]">Explore Selected Destination</h2>
+      <p id="detailHint" class="text-gray-500 mt-3">
+        Only the tour you select will be displayed with complete history, route and day-wise travel plan.
+      </p>
+    </div>
+
+    <div id="cityContainer" class="grid grid-cols-1 gap-10"></div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="bg-[#0B1F3A] text-white">
+    <div class="max-w-7xl mx-auto px-6 py-8 text-center">
+      <p>© <span id="year"></span> Two Souls Travel. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+
+  <script>
+
+    const cities = [
+
+      {
+        name: "Manali",
+        state: "Himachal Pradesh",
+        category: "Mountains",
+        price: 12999,
+        image: "./image/manali.jpg",
+        history: "Manali is a famous Himalayan town located beside the Beas River. It is known for ancient temples, apple orchards, snow-covered mountains and peaceful valleys. The region has historically been an important route for travelers crossing the Himalayas.",
+        sliderPlace: "Hadimba Devi Temple",
+        sliderHistory: "Hadimba Devi Temple is an ancient wooden temple surrounded by tall cedar trees. It is dedicated to Hidimba Devi and is one of Manali's most famous cultural attractions.",
+        sliderImage: "./image/manali.jpg",
+        route: "Manali → Hadimba Temple → Old Manali → Solang Valley → Mall Road",
+        days: [
+          ["Day 1", "Arrival → Hotel Check-in → Hadimba Temple → Old Manali", "Old Manali Café", "Old Manali Restaurant", "Manali Hotel"],
+          ["Day 2", "Solang Valley → Adventure Activities → Beas River", "Solang Valley", "Mall Road", "Manali Hotel"],
+          ["Day 3", "Atal Tunnel / Mountain Region → Local Market", "Mountain Restaurant", "Hotel Restaurant", "Manali Hotel"],
+          ["Day 4", "Breakfast → Checkout → Departure", "During Journey", "Not Included", "Tour Ends"]
+        ]
+      },
+
+      {
+        name: "Goa",
+        state: "India",
+        category: "Beach",
+        price: 14999,
+        image: "./image/goa.jpg",
+        history: "Goa has a unique mixture of Indian and Portuguese culture. It is famous for historic churches, forts, beaches, seafood, festivals, water sports and a relaxed coastal lifestyle.",
+        sliderPlace: "Fort Aguada",
+        sliderHistory: "Fort Aguada is a historic Portuguese fort built to protect Goa from enemy attacks. It offers beautiful views of the Arabian Sea and is one of Goa's important heritage locations.",
+        sliderImage: "./image/goa.jpg",
+        route: "Panaji → Fort Aguada → Calangute → Baga → Anjuna → Old Goa",
+        days: [
+          ["Day 1", "Arrival → Hotel → Calangute Beach → Baga Beach", "Calangute Beach Shack", "Baga Beach Restaurant", "Goa Hotel"],
+          ["Day 2", "Fort Aguada → Candolim Beach → Anjuna Beach", "Candolim", "Anjuna Café", "Goa Hotel"],
+          ["Day 3", "Old Goa Churches → Panaji → Dona Paula", "Panaji", "Riverside Restaurant", "Goa Hotel"],
+          ["Day 4", "Beach Walk → Shopping → Checkout → Departure", "During Journey", "Not Included", "Tour Ends"]
+        ]
+      },
+
+      {
+        name: "Jaipur",
+        state: "Rajasthan",
+        category: "Heritage",
+        price: 11999,
+        image: "./image/jaipur.jpg",
+        history: "Jaipur was founded in 1727 by Maharaja Sawai Jai Singh II. It is known as the Pink City and is famous for royal palaces, forts, bazaars, handicrafts and Rajput architecture.",
+        sliderPlace: "Amber Fort",
+        sliderHistory: "Amber Fort is a magnificent hill fort known for its grand gates, courtyards, palaces and beautiful Rajput-Mughal architecture.",
+        sliderImage: "./image/jaipur.jpg",
+        route: "Jaipur → Amber Fort → Jal Mahal → City Palace → Hawa Mahal → Bazaar",
+        days: [
+          ["Day 1", "Arrival → Amber Fort → Jal Mahal → Local Market", "Near Amber Fort", "Rajasthani Restaurant", "Jaipur Hotel"],
+          ["Day 2", "City Palace → Jantar Mantar → Hawa Mahal → Johari Bazaar", "Old Jaipur", "Cultural Dinner Restaurant", "Jaipur Hotel"],
+          ["Day 3", "Breakfast → Shopping → Checkout → Departure", "During Journey", "Not Included", "Tour Ends"]
+        ]
+      },
+
+      {
+        name: "Kashmir",
+        state: "Jammu & Kashmir",
+        category: "Mountains",
+        price: 18999,
+        image: "./image/kashmir.jpg",
+        history: "Kashmir is famous for beautiful valleys, lakes, Mughal gardens, handicrafts and Himalayan landscapes. Srinagar is especially popular for Dal Lake and traditional houseboats.",
+        sliderPlace: "Dal Lake",
+        sliderHistory: "Dal Lake is one of Srinagar's most famous attractions. It is known for Shikara rides, houseboats, floating markets and beautiful mountain reflections.",
+        sliderImage: "./image/kashmir.jpg",
+        route: "Srinagar → Dal Lake → Gulmarg → Pahalgam → Mughal Gardens",
+        days: [
+          ["Day 1", "Arrival → Houseboat → Dal Lake Shikara Ride", "Dal Lake", "Kashmiri Restaurant", "Srinagar Houseboat"],
+          ["Day 2", "Srinagar → Gulmarg → Valley Walk", "Gulmarg", "Srinagar Hotel", "Srinagar Hotel"],
+          ["Day 3", "Pahalgam → Betaab Valley → Aru Valley", "Pahalgam", "Pahalgam Hotel", "Pahalgam Hotel"],
+          ["Day 4", "Nishat Bagh → Shalimar Bagh → Local Market", "Srinagar", "Kashmiri Wazwan Restaurant", "Srinagar Hotel"],
+          ["Day 5", "Breakfast → Checkout → Airport", "Not Included", "Not Included", "Tour Ends"]
+        ]
+      },
+
+      {
+        name: "Kerala",
+        state: "India",
+        category: "Nature",
+        price: 16999,
+        image: "./image/kerala.jpg",
+        history: "Kerala has a long history of spice trade and cultural exchange. It is famous for Ayurveda, backwaters, coconut villages, tea plantations, waterfalls and traditional art.",
+        sliderPlace: "Alleppey Backwaters",
+        sliderHistory: "Alleppey is famous for its calm backwaters, coconut-lined canals and traditional houseboats. It is one of Kerala's most peaceful travel experiences.",
+        sliderImage: "./image/kerala.jpg",
+        route: "Kochi → Munnar → Thekkady → Alleppey → Kochi",
+        days: [
+          ["Day 1", "Arrival → Fort Kochi → Chinese Fishing Nets → Marine Drive", "Fort Kochi", "Kerala Restaurant", "Kochi Hotel"],
+          ["Day 2", "Kochi → Munnar → Tea Gardens → Waterfalls", "On the Way", "Munnar Resort", "Munnar Hotel"],
+          ["Day 3", "Eravikulam Park → Mattupetty Dam → Echo Point", "Munnar", "Munnar Hotel", "Munnar Hotel"],
+          ["Day 4", "Munnar → Alleppey → Houseboat Cruise", "Houseboat", "Houseboat", "Alleppey Houseboat"],
+          ["Day 5", "Breakfast → Checkout → Kochi Departure", "Not Included", "Not Included", "Tour Ends"]
+        ]
+      },
+
+      {
+        name: "Udaipur",
+        state: "Rajasthan",
+        category: "Heritage",
+        price: 9999,
+        image: "./image/Udaipur/pranav-panchal-IEArgDckRuQ-unsplash.jpg",
+        history: "Udaipur was founded in 1553 by Maharana Udai Singh II. It is known for beautiful lakes, Rajput palaces, artistic traditions and Aravalli mountain views.",
+        sliderPlace: "City Palace",
+        sliderHistory: "City Palace is a grand royal palace complex overlooking Lake Pichola. It contains courtyards, museums, balconies and beautiful examples of Rajput architecture.",
+        sliderImage: "./image/udaipur.jpg",
+        route: "Udaipur → City Palace → Jagdish Temple → Lake Pichola → Sajjangarh",
+        days: [
+          ["Day 1", "Arrival → City Palace → Jagdish Temple → Local Market", "City Palace Area", "Lake Pichola Restaurant", "Udaipur Hotel"],
+          ["Day 2", "Saheliyon Ki Bari → Sajjangarh → Lake Pichola Boat Ride", "Fateh Sagar Lake", "Lake View Restaurant", "Udaipur Hotel"],
+          ["Day 3", "Breakfast → Shopping → Checkout → Departure", "During Journey", "Not Included", "Tour Ends"]
+        ]
+      },
+
+      {
+        name: "Rishikesh",
+        state: "Uttarakhand",
+        category: "Adventure",
+        price: 7999,
+        image: "./image/rishikesh.jpg",
+        history: "Rishikesh is a major center of yoga, meditation and spirituality. It is also famous for river rafting, trekking, camping and adventure activities.",
+        sliderPlace: "Triveni Ghat",
+        sliderHistory: "Triveni Ghat is a famous riverside location where visitors gather for the peaceful evening Ganga Aarti.",
+        sliderImage: "./image/rishikesh.jpg",
+        route: "Rishikesh → Triveni Ghat → Beatles Ashram → Rafting Point → Waterfall",
+        days: [
+          ["Day 1", "Arrival → Laxman Jhula → Beatles Ashram → Triveni Ghat", "Riverside Café", "Tapovan Restaurant", "Rishikesh Hotel"],
+          ["Day 2", "River Rafting → Neer Waterfall → Riverside Camping", "Rafting Point", "Campfire Dinner", "Riverside Camp"],
+          ["Day 3", "Yoga → Breakfast → Checkout → Departure", "Not Included", "Not Included", "Tour Ends"]
+        ]
+      },
+
+      {
+        name: "Darjeeling",
+        state: "West Bengal",
+        category: "Mountains",
+        price: 15999,
+        image: "./image/darjeeling.jpg",
+        history: "Darjeeling became famous during the British period as a hill station. It is known for tea gardens, Kanchenjunga views and the historic Himalayan Toy Train.",
+        sliderPlace: "Tiger Hill",
+        sliderHistory: "Tiger Hill is one of Darjeeling's most famous viewpoints. It is popular for sunrise views over Kanchenjunga and the Himalayan range.",
+        sliderImage: "./image/darjeeling.jpg",
+        route: "Darjeeling → Tiger Hill → Batasia Loop → Tea Garden → Mall Road",
+        days: [
+          ["Day 1", "Arrival → Hotel → Mall Road → Chowrasta", "Mall Road", "Local Restaurant", "Darjeeling Hotel"],
+          ["Day 2", "Tiger Hill → Batasia Loop → Ghoom Monastery → Tea Estate", "Tea Garden", "Darjeeling Hotel", "Darjeeling Hotel"],
+          ["Day 3", "Toy Train → Himalayan Institute → Zoo", "Darjeeling", "Bengali Restaurant", "Darjeeling Hotel"],
+          ["Day 4", "Breakfast → Checkout → Departure", "Not Included", "Not Included", "Tour Ends"]
+        ]
+      },
+
+      {
+        name: "Andaman",
+        state: "India",
+        category: "Beach",
+        price: 24999,
+        image: "./image/andaman.jpg",
+        history: "The Andaman Islands are known for tropical forests, coral reefs, marine life and historical places. They are popular for snorkeling, scuba diving and peaceful beaches.",
+        sliderPlace: "Radhanagar Beach",
+        sliderHistory: "Radhanagar Beach is famous for its clear blue water, white sand and peaceful sunset views. It is one of the most beautiful beaches in the Andaman Islands.",
+        sliderImage: "./image/andaman.jpg",
+        route: "Port Blair → Cellular Jail → Havelock → Radhanagar Beach → Elephant Beach",
+        days: [
+          ["Day 1", "Arrival → Cellular Jail → Light and Sound Show", "Port Blair", "Port Blair Restaurant", "Port Blair Hotel"],
+          ["Day 2", "Ferry → Havelock → Radhanagar Beach", "Havelock", "Beach Resort", "Havelock Hotel"],
+          ["Day 3", "Elephant Beach → Snorkeling → Coral Reef Activities", "Island Café", "Resort", "Havelock Hotel"],
+          ["Day 4", "Ferry → Ross Island → North Bay → Shopping", "Port Blair", "Waterfront Restaurant", "Port Blair Hotel"],
+          ["Day 5", "Breakfast → Checkout → Airport", "Not Included", "Not Included", "Tour Ends"]
+        ]
+      },
+
+      {
+        name: "Varanasi",
+        state: "Uttar Pradesh",
+        category: "Spiritual",
+        price: 8999,
+        image: "./image/varanasi.jpg",
+        history: "Varanasi is one of the oldest continuously inhabited cities in the world. It is famous for its ghats, temples, Ganga River, silk weaving and spiritual traditions.",
+        sliderPlace: "Dashashwamedh Ghat",
+        sliderHistory: "Dashashwamedh Ghat is one of Varanasi's most famous ghats and is known for its grand evening Ganga Aarti.",
+        sliderImage: "./image/varanasi.jpg",
+        route: "Varanasi → Ganga Ghats → Kashi Vishwanath → Sarnath → Ganga Aarti",
+        days: [
+          ["Day 1", "Arrival → Dashashwamedh Ghat → Ganga Aarti", "Old Varanasi", "Banarasi Restaurant", "Varanasi Hotel"],
+          ["Day 2", "Morning Boat Ride → Kashi Vishwanath → Sarnath", "Temple Area", "Ghat Restaurant", "Varanasi Hotel"],
+          ["Day 3", "Breakfast → Local Shopping → Checkout → Departure", "Not Included", "Not Included", "Tour Ends"]
+        ]
+      },
+
+      {
+        name: "Agra",
+        state: "Uttar Pradesh",
+        category: "Heritage",
+        price: 6999,
+        image: "./image/agra.jpg",
+        history: "Agra was a major Mughal imperial city. The Taj Mahal was built by Emperor Shah Jahan in memory of Mumtaz Mahal. Agra is also famous for Agra Fort and Mughal monuments.",
+        sliderPlace: "Taj Mahal",
+        sliderHistory: "The Taj Mahal is a world-famous marble monument built by Shah Jahan in memory of Mumtaz Mahal. It is one of India's most recognized heritage landmarks.",
+        sliderImage: "./image/agra.jpg",
+        route: "Agra → Taj Mahal → Agra Fort → Mehtab Bagh → Marble Market",
+        days: [
+          ["Day 1", "Arrival → Taj Mahal → Agra Fort → Local Market", "Mughlai Restaurant", "Hotel Restaurant", "Agra Hotel"],
+          ["Day 2", "Mehtab Bagh → Marble Market → Checkout → Departure", "During Journey", "Not Included", "Tour Ends"]
+        ]
+      },
+
+      {
+        name: "Amritsar",
+        state: "Punjab",
+        category: "Spiritual",
+        price: 7999,
+        image: "./image/amritsar.jpg",
+        history: "Amritsar is an important spiritual and cultural center of Sikhism. It is famous for the Golden Temple, Jallianwala Bagh, Punjabi food and historical museums.",
+        sliderPlace: "Golden Temple",
+        sliderHistory: "The Golden Temple, also known as Harmandir Sahib, is a major spiritual center famous for its golden architecture, peaceful pool and community kitchen.",
+        sliderImage: "./image/amritsar.jpg",
+        route: "Amritsar → Golden Temple → Jallianwala Bagh → Partition Museum → Wagah Border",
+        days: [
+          ["Day 1", "Arrival → Golden Temple → Jallianwala Bagh → Partition Museum", "Punjabi Restaurant", "Golden Temple Area", "Amritsar Hotel"],
+          ["Day 2", "Breakfast → Wagah Border → Local Shopping → Departure", "During Journey", "Not Included", "Tour Ends"]
+        ]
+      }
+
+    ];
+
+
+    /* URL ID (1 se 12). Ek hi baar read karte hain */
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedId = Number(urlParams.get("id"));
+
+    const hasValidCityId =
+      Number.isInteger(selectedId) &&
+      selectedId >= 1 &&
+      selectedId <= cities.length;
+
+    const selectedCity = hasValidCityId ? cities[selectedId - 1] : null;
+
+
+    /* SLIDER */
+    const sliderTrack = document.getElementById("sliderTrack");
+    const sliderDots = document.getElementById("sliderDots");
+
+    /* FIX: id 1-based hai, slider index 0-based. Isliye selectedId - 1 */
+    let currentSlide = hasValidCityId ? selectedId - 1 : 0;
+
+    function createSlider() {
+
+      sliderTrack.innerHTML = cities.map((city, index) => `
+        <div class="min-w-full relative cursor-pointer" onclick="openCity(${index})">
+
+          <img src="${city.sliderImage}"
+            alt="${city.sliderPlace}"
+            class="w-full h-[430px] md:h-[520px] object-cover">
+
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+
+          <div class="absolute bottom-0 left-0 right-0 p-7 md:p-12 text-white">
+            <span class="inline-block bg-orange-500 px-4 py-2 rounded-full text-sm font-semibold mb-3">
+              ${city.name}, ${city.state}
+            </span>
+
+            <h2 class="text-3xl md:text-5xl font-bold mb-3">
+              ${city.sliderPlace}
+            </h2>
+
+            <p class="max-w-3xl text-slate-200 leading-7">
+              ${city.sliderHistory}
+            </p>
+          </div>
+
+        </div>
+      `).join("");
+
+      sliderDots.innerHTML = cities.map((_, index) => `
+        <button
+          onclick="goToSlide(${index})"
+          class="slider-dot w-3 h-3 rounded-full bg-white/60">
+        </button>
+      `).join("");
+
+      updateSlider();
+    }
+
+    function updateSlider() {
+      sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+      document.querySelectorAll(".slider-dot").forEach((dot, index) => {
+        dot.classList.toggle("bg-orange-500", index === currentSlide);
+        dot.classList.toggle("bg-white/60", index !== currentSlide);
+      });
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlider();
+    }
+
+    /* FIX: index + 1 (slider 0-based, tour id 1-based) */
+    function openCity(index) {
+      window.location.href = `tour-details.html?id=${index + 1}`;
+    }
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      currentSlide = (currentSlide + 1) % cities.length;
+      updateSlider();
+    });
+
+    document.getElementById("prevBtn").addEventListener("click", () => {
+      currentSlide = (currentSlide - 1 + cities.length) % cities.length;
+      updateSlider();
+    });
+
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % cities.length;
+      updateSlider();
+    }, 5000);
+
+
+    /* CITY DETAILS (sirf selected city) */
+    const cityContainer = document.getElementById("cityContainer");
+
+    if (selectedCity) {
+
+      const city = selectedCity;
+
+      cityContainer.innerHTML = `
+        <article class="city-card bg-white rounded-3xl overflow-hidden shadow-md grid md:grid-cols-2">
+
+          <img src="${city.image}"
+            alt="${city.name}"
+            class="w-full h-full min-h-[360px] object-cover">
+
+          <div class="p-7 md:p-10">
+
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="bg-sky-100 text-sky-700 px-3 py-1 rounded-full text-sm font-semibold">
+                ${city.category}
+              </span>
+
+              <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-semibold">
+                ${city.state}
+              </span>
+            </div>
+
+            <h2 class="text-3xl font-bold text-[#0B1F3A] mb-3">
+              ${city.name}
+            </h2>
+
+            <div class="mb-6">
+              <h3 class="font-bold text-xl text-[#0B1F3A] mb-2">
+                <i class="fa-solid fa-landmark text-sky-500 mr-2"></i>
+                Place History
+              </h3>
+
+              <p class="text-gray-600 leading-7">
+                ${city.history}
+              </p>
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-5 mb-6">
+              <h3 class="font-bold text-lg text-[#0B1F3A] mb-2">
+                <i class="fa-solid fa-route text-orange-500 mr-2"></i>
+                Suggested Route
+              </h3>
+
+              <p class="text-gray-600 leading-7">
+                ${city.route}
+              </p>
+            </div>
+
+            <div class="md:col-span-2 mt-8">
+              <h3 class="text-2xl font-bold text-[#0B1F3A] mb-5">
+                <i class="fa-solid fa-calendar-days text-sky-500 mr-2"></i>
+                Complete Day-Wise Plan
+              </h3>
+
+              <div class="space-y-5">
+                ${city.days.map(day => `
+                  <div class="border border-gray-200 rounded-2xl p-5">
+
+                    <h4 class="text-xl font-bold text-orange-500 mb-3">
+                      ${day[0]}
+                    </h4>
+
+                    <div class="mb-4">
+                      <p class="font-semibold text-[#0B1F3A] mb-1">
+                        <i class="fa-solid fa-location-dot text-sky-500 mr-2"></i>
+                        Places To Visit
+                      </p>
+
+                      <p class="text-gray-600 text-sm leading-6">
+                        ${day[1]}
+                      </p>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-3">
+
+                      <div class="bg-slate-50 rounded-lg p-3">
+                        <p class="font-semibold text-sm text-[#0B1F3A]">
+                          <i class="fa-solid fa-utensils text-orange-500 mr-2"></i>
+                          Lunch
+                        </p>
+
+                        <p class="text-gray-600 text-sm mt-1">
+                          ${day[2]}
+                        </p>
+                      </div>
+
+                      <div class="bg-slate-50 rounded-lg p-3">
+                        <p class="font-semibold text-sm text-[#0B1F3A]">
+                          <i class="fa-solid fa-utensils text-orange-500 mr-2"></i>
+                          Dinner
+                        </p>
+
+                        <p class="text-gray-600 text-sm mt-1">
+                          ${day[3]}
+                        </p>
+                      </div>
+
+                    </div>
+
+                    <div class="mt-3 bg-sky-50 rounded-lg p-3">
+                      <p class="font-semibold text-sm text-[#0B1F3A]">
+                        <i class="fa-solid fa-bed text-sky-500 mr-2"></i>
+                        Night Stay
+                      </p>
+
+                      <p class="text-gray-600 text-sm mt-1">
+                        ${day[4]}
+                      </p>
+                    </div>
+
+                  </div>
+                `).join("")}
+              </div>
+
+            </div>
+
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(city.name + " India")}"
+              target="_blank"
+              class="mt-6 inline-flex items-center gap-2 bg-[#0B1F3A] hover:bg-sky-700 text-white px-6 py-3 rounded-full font-semibold transition">
+
+              <i class="fa-solid fa-map-location-dot"></i>
+              View ${city.name} Map
+
+            </a>
+
+            <a
+              href="booking.html?id=${selectedId}"
+              class="mt-4 ml-2 inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full font-semibold transition">
+
+              <i class="fa-solid fa-calendar-check"></i>
+              Book This Tour
+
+            </a>
+
+          </div>
+        </article>
+      `;
+
+    } else {
+
+      /* Direct page open kiya ho ya id galat ho to hint dikhao */
+      cityContainer.innerHTML = `
+        <div class="text-center bg-white rounded-3xl shadow-md p-10">
+          <p class="text-gray-600 mb-5">
+            Kisi bhi slide par click karo ya tours page se ek tour select karo.
+          </p>
+          <a href="tours.html"
+            class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full font-semibold transition">
+            <i class="fa-solid fa-compass"></i>
+            Explore Tours
+          </a>
+        </div>
+      `;
+
+    }
+
+
+    /* YEAR */
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    /* INIT SLIDER */
+    createSlider();
+
+  </script>
+
+</body>
+</html>

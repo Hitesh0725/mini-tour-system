@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+  <title>Two Souls Travel | Explore Together</title>
+   <link href="dist/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: "#0B1F3A",
+            sky: "#38BDF8",
+            orange: "#F59E0B",
+            cream: "#F8FAFC"
+          }
+        }
+      }
+    }
+  </script>
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .hero-bg {
+      background:
+        linear-gradient(
+          90deg,
+          rgba(11, 31, 58, 0.95) 0%,
+          rgba(11, 31, 58, 0.72) 45%,
+          rgba(11, 31, 58, 0.25) 100%
+        ),
+        url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2000&q=85");
+
+      background-size: cover;
+      background-position: center;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .tour-card {
+      transition: all 0.3s ease;
+    }
+
+    .tour-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 35px rgba(11, 31, 58, 0.15);
+    }
+
+    .hidden-card {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body class="bg-cream text-slate-800">
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="absolute top-0 left-0 w-full z-50">
+    <nav class="max-w-7xl mx-auto px-5 lg:px-8 py-5">
+
+      <div class="flex items-center justify-between">
+
+        <!-- LOGO -->
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg overflow-hidden">
+            <img
+              src="./image/logo.png"
+              alt="Two Souls Travel Logo"
+              class="w-full h-full object-contain p-1"
+            />
+          </div>
+
+          <div class="text-white">
+            <h1 class="font-bold text-lg tracking-wide">TWO SOULS</h1>
+            <p class="text-[10px] tracking-[4px] text-sky">TRAVEL</p>
+          </div>
+        </a>
+
+        <!-- DESKTOP MENU -->
+        <div class="hidden md:flex items-center gap-8 text-white text-sm font-medium">
+          <a href="index.html" class="text-orange">Home</a>
+          <a href="tours.html" class="hover:text-orange transition">Tours</a>
+          <a href="tour-details.html?id=1" class="hover:text-orange transition">Tour-Details</a>
+          <a href="booking.html" class="hover:text-orange transition">Booking</a>
+          <a href="my-bookings.html" class="hover:text-orange transition">My-Booking</a>
+          <a href="login.html" class="hover:text-orange transition">Login</a>
+        </div>
+
+        <!-- DESKTOP BUTTON -->
+        <div class="hidden md:block">
+          <a
+            href="tours.html"
+            class="bg-orange hover:bg-amber-500 text-white px-5 py-3 rounded-full text-sm font-semibold transition shadow-lg"
+          >
+            Explore Tours
+            <i class="fa-solid fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- MOBILE BUTTON -->
+        <button id="menuBtn" class="md:hidden text-white text-2xl">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+      </div>
+
+      <!-- MOBILE MENU -->
+      <div
+        id="mobileMenu"
+        class="hidden md:hidden mt-5 glass rounded-2xl p-5 text-white space-y-4"
+      >
+        <a href="index.html" class="block">Home</a>
+        <a href="tours.html" class="block">Tours</a>
+        <a href="#about" class="block">About</a>
+        <a href="#why-us" class="block">Why Us</a>
+        <a href="#contact" class="block">Contact</a>
+
+        <a
+          href="tours.html"
+          class="block text-center bg-orange py-3 rounded-full"
+        >
+          Explore Tours
+        </a>
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero-bg min-h-[760px] flex items-center text-white">
+
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 w-full pt-24">
+
+      <div class="max-w-2xl">
+
+        <div class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-6">
+          <i class="fa-solid fa-heart text-orange"></i>
+          <span class="text-sm">Two Souls. One Beautiful Journey.</span>
+        </div>
+
+        <h2 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight">
+          Discover The
+          <span class="text-sky">World</span>
+          Together.
+        </h2>
+
+        <p class="mt-6 text-lg text-slate-200 max-w-xl leading-relaxed">
+          Explore breathtaking destinations, create unforgettable memories,
+          and experience every journey with the people who matter most.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a
+            href="tours.html"
+            class="bg-orange hover:bg-amber-500 px-7 py-4 rounded-full font-bold transition shadow-xl"
+          >
+            Explore Destinations
+            <i class="fa-solid fa-arrow-right ml-2"></i>
+          </a>
+
+          <a
+            href="#featured"
+            class="border border-white/50 hover:bg-white hover:text-navy px-7 py-4 rounded-full font-semibold transition"
+          >
+            View Featured Tours
+          </a>
+        </div>
+
+      </div>
+
+
+      <!-- HERO STATS -->
+      <div class="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-5 max-w-3xl">
+
+        <div class="glass rounded-2xl p-4">
+          <h3 class="text-2xl font-bold">50+</h3>
+          <p class="text-sm text-slate-300">Destinations</p>
+        </div>
+
+        <div class="glass rounded-2xl p-4">
+          <h3 class="text-2xl font-bold">1200+</h3>
+          <p class="text-sm text-slate-300">Happy Travelers</p>
+        </div>
+
+        <div class="glass rounded-2xl p-4">
+          <h3 class="text-2xl font-bold">4.9/5</h3>
+          <p class="text-sm text-slate-300">Customer Rating</p>
+        </div>
+
+        <div class="glass rounded-2xl p-4">
+          <h3 class="text-2xl font-bold">24/7</h3>
+          <p class="text-sm text-slate-300">Travel Support</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= SEARCH + FILTER BOX ================= -->
+  <section class="relative -mt-16 z-10 px-5">
+
+    <div class="max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl p-6 lg:p-8">
+
+      <div class="flex items-center gap-3 mb-6">
+
+        <div class="w-10 h-10 bg-sky/10 text-sky rounded-full flex items-center justify-center">
+          <i class="fa-solid fa-filter"></i>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-lg">Find Your Perfect Journey</h3>
+          <p class="text-sm text-slate-500">
+            Search and filter your next adventure
+          </p>
+        </div>
+
+      </div>
+
+
+      <form
+        id="searchForm"
+        class="grid grid-cols-1 md:grid-cols-5 gap-4"
+      >
+
+        <!-- DESTINATION -->
+        <div>
+          <label class="text-xs font-semibold text-slate-500 mb-2 block">
+            Destination
+          </label>
+
+          <div class="relative">
+            <i class="fa-solid fa-location-dot absolute left-4 top-4 text-sky"></i>
+
+            <input
+              type="text"
+              id="destinationInput"
+              placeholder="Where do you want to go?"
+              class="w-full border border-slate-200 rounded-xl py-3.5 pl-11 pr-4 outline-none focus:border-sky"
+            />
+          </div>
+        </div>
+
+
+        <!-- CATEGORY -->
+        <div>
+          <label class="text-xs font-semibold text-slate-500 mb-2 block">
+            Category
+          </label>
+
+          <select
+            id="categoryInput"
+            class="w-full border border-slate-200 rounded-xl py-3.5 px-4 outline-none focus:border-sky bg-white"
+          >
+            <option value="all">All Categories</option>
+            <option value="adventure">Adventure</option>
+            <option value="beach">Beach</option>
+            <option value="heritage">Heritage</option>
+          </select>
+        </div>
+
+
+        <!-- PRICE -->
+        <div>
+          <label class="text-xs font-semibold text-slate-500 mb-2 block">
+            Maximum Price
+          </label>
+
+          <select
+            id="priceInput"
+            class="w-full border border-slate-200 rounded-xl py-3.5 px-4 outline-none focus:border-sky bg-white"
+          >
+            <option value="all">Any Price</option>
+            <option value="15000">Under ₹15,000</option>
+            <option value="20000">Under ₹20,000</option>
+            <option value="40000">Under ₹40,000</option>
+          </select>
+        </div>
+
+
+        <!-- TRAVEL DATE -->
+        <div>
+          <label class="text-xs font-semibold text-slate-500 mb-2 block">
+            Travel Date
+          </label>
+
+          <div class="relative">
+            <i class="fa-regular fa-calendar absolute left-4 top-4 text-sky"></i>
+
+            <input
+              type="date"
+              id="travelDate"
+              class="w-full border border-slate-200 rounded-xl py-3.5 pl-11 pr-4 outline-none focus:border-sky"
+            />
+          </div>
+        </div>
+
+
+        <!-- BUTTONS -->
+        <div class="flex items-end gap-2">
+
+          <button
+            type="submit"
+            class="flex-1 bg-navy hover:bg-slate-800 text-white py-3.5 rounded-xl font-semibold transition"
+          >
+            Search
+            <i class="fa-solid fa-arrow-right ml-1"></i>
+          </button>
+
+          <button
+            type="button"
+            id="resetBtn"
+            class="px-4 bg-orange hover:bg-amber-500 text-white py-3.5 rounded-xl font-semibold transition"
+            title="Reset Filters"
+          >
+            <i class="fa-solid fa-rotate-right"></i>
+          </button>
+
+        </div>
+
+      </form>
+
+
+      <!-- RESULT TEXT -->
+      <p
+        id="filterResult"
+        class="text-sm text-slate-500 mt-5"
+      >
+        Showing all featured destinations
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ================= FEATURED TOURS ================= -->
+  <section id="featured" class="py-24 px-5">
+
+    <div class="max-w-7xl mx-auto">
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-12">
+
+        <div>
+          <span class="text-orange font-bold text-sm uppercase tracking-widest">
+            Explore The World
+          </span>
+
+          <h2 class="text-4xl lg:text-5xl font-extrabold text-navy mt-3">
+            Popular Destinations
+          </h2>
+
+          <p class="text-slate-500 mt-4 max-w-xl">
+            Handpicked experiences for unforgettable adventures and beautiful memories.
+          </p>
+        </div>
+
+        <a
+          href="tours.html"
+          class="text-navy font-bold hover:text-orange transition"
+        >
+          View All Tours
+          <i class="fa-solid fa-arrow-right ml-2"></i>
+        </a>
+
+      </div>
+
+
+      <!-- TOUR GRID -->
+      <div
+        id="tourGrid"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7"
+      >
+
+
+        <!-- CARD 1 : MANALI (id=1, matches tours.html) -->
+        <div
+          class="tour-card bg-white rounded-3xl overflow-hidden shadow-md"
+          data-destination="manali india himalayan escape"
+          data-category="adventure"
+          data-price="12999"
+        >
+
+          <div class="relative h-64">
+
+            <img
+              src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80"
+              alt="Mountain destination"
+              class="w-full h-full object-cover"
+            />
+
+            <span class="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-full text-xs font-bold text-navy">
+              Adventure
+            </span>
+
+            <span class="absolute bottom-4 right-4 bg-navy text-white px-3 py-1.5 rounded-full text-xs font-semibold">
+              ₹12,999
+            </span>
+
+          </div>
+
+
+          <div class="p-6">
+
+            <div class="flex items-center gap-2 text-sm text-slate-500 mb-3">
+              <i class="fa-solid fa-location-dot text-orange"></i>
+              Manali, India
+            </div>
+
+            <h3 class="text-xl font-bold text-navy">
+              Himalayan Escape
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-2">
+              5 Days / 4 Nights
+            </p>
+
+            <div class="flex items-center justify-between mt-5 pt-5 border-t">
+
+              <div class="flex items-center gap-1 text-orange">
+                <i class="fa-solid fa-star"></i>
+                <span class="text-sm font-bold text-slate-700">4.9</span>
+              </div>
+
+              <a
+                href="tour-details.html?id=1"
+                class="text-navy font-bold text-sm hover:text-orange"
+              >
+                View Details →
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- CARD 2 : GOA (id=2, matches tours.html) -->
+        <div
+          class="tour-card bg-white rounded-3xl overflow-hidden shadow-md"
+          data-destination="goa beach panaji calangute baga"
+          data-category="beach"
+          data-price="14999"
+        >
+
+          <div class="relative h-64">
+
+            <img
+              src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=80"
+              alt="Goa Beach"
+              class="w-full h-full object-cover"
+            />
+
+            <span class="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-full text-xs font-bold text-navy">
+              Beach
+            </span>
+
+            <span class="absolute bottom-4 right-4 bg-navy text-white px-3 py-1.5 rounded-full text-xs font-semibold">
+              ₹14,999
+            </span>
+
+          </div>
+
+
+          <div class="p-6">
+
+            <div class="flex items-center gap-2 text-sm text-slate-500 mb-3">
+              <i class="fa-solid fa-location-dot text-orange"></i>
+              Goa, India
+            </div>
+
+            <h3 class="text-xl font-bold text-navy">
+              Goa Beach Vibes
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-2">
+              4 Days / 3 Nights
+            </p>
+
+            <div class="flex items-center justify-between mt-5 pt-5 border-t">
+
+              <div class="flex items-center gap-1 text-orange">
+                <i class="fa-solid fa-star"></i>
+                <span class="text-sm font-bold text-slate-700">4.8</span>
+              </div>
+
+              <a
+                href="tour-details.html?id=2"
+                class="text-navy font-bold text-sm hover:text-orange"
+              >
+                View Details →
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- CARD 3 : JAIPUR (id=3, matches tours.html) -->
+        <div
+          class="tour-card bg-white rounded-3xl overflow-hidden shadow-md"
+          data-destination="jaipur rajasthan pink city royal palace"
+          data-category="heritage"
+          data-price="11999"
+        >
+
+          <div class="relative h-64">
+
+            <img
+              src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=900&q=80"
+              alt="Jaipur Rajasthan"
+              class="w-full h-full object-cover"
+            />
+
+            <span class="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-full text-xs font-bold text-navy">
+              Heritage
+            </span>
+
+            <span class="absolute bottom-4 right-4 bg-navy text-white px-3 py-1.5 rounded-full text-xs font-semibold">
+              ₹11,999
+            </span>
+
+          </div>
+
+
+          <div class="p-6">
+
+            <div class="flex items-center gap-2 text-sm text-slate-500 mb-3">
+              <i class="fa-solid fa-location-dot text-orange"></i>
+              Jaipur, Rajasthan
+            </div>
+
+            <h3 class="text-xl font-bold text-navy">
+              Royal Rajasthan
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-2">
+              4 Days / 3 Nights
+            </p>
+
+            <div class="flex items-center justify-between mt-5 pt-5 border-t">
+
+              <div class="flex items-center gap-1 text-orange">
+                <i class="fa-solid fa-star"></i>
+                <span class="text-sm font-bold text-slate-700">4.7</span>
+              </div>
+
+              <a
+                href="tour-details.html?id=3"
+                class="text-navy font-bold text-sm hover:text-orange"
+              >
+                View Details →
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- NO RESULT MESSAGE -->
+      <div
+        id="noResult"
+        class="hidden text-center py-16"
+      >
+        <i class="fa-solid fa-map-location-dot text-5xl text-slate-300"></i>
+
+        <h3 class="text-2xl font-bold text-navy mt-5">
+          No destinations found
+        </h3>
+
+        <p class="text-slate-500 mt-2">
+          Try another destination or change your filters.
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= ABOUT SECTION ================= -->
+  <section id="about" class="py-24 bg-white px-5">
+
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+
+      <div class="relative">
+
+        <img
+          src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1000&q=85"
+          alt="Couple traveling together"
+          class="rounded-3xl w-full h-[500px] object-cover"
+        />
+
+        <div class="absolute -bottom-7 -right-5 sm:right-8 bg-orange text-white rounded-2xl p-6 shadow-xl">
+          <i class="fa-solid fa-heart text-2xl mb-2"></i>
+          <h3 class="text-2xl font-bold">10+</h3>
+          <p class="text-sm">Years of Memories</p>
+        </div>
+
+      </div>
+
+
+      <div>
+
+        <span class="text-orange font-bold text-sm uppercase tracking-widest">
+          About Two Souls
+        </span>
+
+        <h2 class="text-4xl lg:text-5xl font-extrabold text-navy mt-4 leading-tight">
+          Every Journey Is Better
+          <span class="text-sky">Together.</span>
+        </h2>
+
+        <p class="text-slate-500 mt-6 leading-relaxed">
+          Two Souls Travel is built for people who believe that travel is
+          not just about places, but about the memories created along the way.
+        </p>
+
+        <p class="text-slate-500 mt-4 leading-relaxed">
+          From peaceful mountains to beautiful beaches, we help you discover
+          destinations that turn ordinary trips into extraordinary stories.
+        </p>
+
+        <div class="grid grid-cols-2 gap-5 mt-8">
+
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-full bg-sky/10 text-sky flex items-center justify-center">
+              <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-navy">Best Destinations</h4>
+              <p class="text-xs text-slate-500 mt-1">Handpicked places</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-full bg-orange/10 text-orange flex items-center justify-center">
+              <i class="fa-solid fa-headset"></i>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-navy">24/7 Support</h4>
+              <p class="text-xs text-slate-500 mt-1">Always with you</p>
+            </div>
+          </div>
+
+        </div>
+
+        <a
+          href="#why-us"
+          class="inline-block mt-8 bg-navy text-white px-6 py-3.5 rounded-full font-semibold hover:bg-slate-800 transition"
+        >
+          Discover Our Story
+          <i class="fa-solid fa-arrow-right ml-2"></i>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= WHY US ================= -->
+  <section id="why-us" class="py-24 px-5 bg-slate-50">
+
+    <div class="max-w-7xl mx-auto">
+
+      <div class="text-center max-w-2xl mx-auto mb-14">
+
+        <span class="text-orange font-bold text-sm uppercase tracking-widest">
+          Why Choose Us
+        </span>
+
+        <h2 class="text-4xl font-extrabold text-navy mt-3">
+          Travel Made Simple
+        </h2>
+
+        <p class="text-slate-500 mt-4">
+          We make every step of your journey easy, comfortable and memorable.
+        </p>
+
+      </div>
+
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+
+        <div class="bg-white rounded-3xl p-8 text-center shadow-sm hover:shadow-lg transition">
+
+          <div class="w-16 h-16 mx-auto rounded-2xl bg-sky/10 text-sky flex items-center justify-center text-2xl">
+            <i class="fa-solid fa-route"></i>
+          </div>
+
+          <h3 class="text-xl font-bold text-navy mt-6">
+            Carefully Planned
+          </h3>
+
+          <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+            Every itinerary is thoughtfully planned so you can enjoy your trip without stress.
+          </p>
+
+        </div>
+
+
+        <div class="bg-white rounded-3xl p-8 text-center shadow-sm hover:shadow-lg transition">
+
+          <div class="w-16 h-16 mx-auto rounded-2xl bg-orange/10 text-orange flex items-center justify-center text-2xl">
+            <i class="fa-solid fa-wallet"></i>
+          </div>
+
+          <h3 class="text-xl font-bold text-navy mt-6">
+            Best Value
+          </h3>
+
+          <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+            Enjoy amazing travel experiences at prices that fit your budget.
+          </p>
+
+        </div>
+
+
+        <div class="bg-white rounded-3xl p-8 text-center shadow-sm hover:shadow-lg transition">
+
+          <div class="w-16 h-16 mx-auto rounded-2xl bg-sky/10 text-sky flex items-center justify-center text-2xl">
+            <i class="fa-solid fa-face-smile-beam"></i>
+          </div>
+
+          <h3 class="text-xl font-bold text-navy mt-6">
+            Happy Memories
+          </h3>
+
+          <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+            Our goal is to help you return home with stories worth remembering forever.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= CTA SECTION ================= -->
+  <section class="py-24 px-5">
+
+    <div class="max-w-6xl mx-auto rounded-[2rem] overflow-hidden relative bg-navy">
+
+      <div class="absolute inset-0 opacity-20">
+
+        <img
+          src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&q=80"
+          class="w-full h-full object-cover"
+          alt="Nature travel background"
+        />
+
+      </div>
+
+      <div class="relative z-10 text-center px-6 py-20 text-white">
+
+        <i class="fa-solid fa-heart text-orange text-3xl mb-5"></i>
+
+        <h2 class="text-4xl lg:text-5xl font-extrabold">
+          Your Next Story Starts Here.
+        </h2>
+
+        <p class="text-slate-300 mt-5 max-w-xl mx-auto">
+          Pack your bags, choose your destination, and let the adventure begin.
+        </p>
+
+        <a
+          href="tours.html"
+          class="inline-block mt-8 bg-orange hover:bg-amber-500 px-8 py-4 rounded-full font-bold transition"
+        >
+          Start Your Journey
+          <i class="fa-solid fa-plane-departure ml-2"></i>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= FOOTER ================= -->
+  <footer id="contact" class="bg-navy text-white">
+
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 py-16">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+
+        <!-- BRAND -->
+        <div>
+
+          <div class="flex items-center gap-3 mb-5">
+
+            <div class="w-11 h-11 rounded-full bg-white flex items-center justify-center overflow-hidden">
+              <img
+                src="./image/logo.png"
+                alt="Two Souls Travel Logo"
+                class="w-full h-full object-contain p-1"
+              />
+            </div>
+
+            <div>
+              <h3 class="font-bold tracking-wide">TWO SOULS</h3>
+              <p class="text-[9px] tracking-[4px] text-sky">TRAVEL</p>
+            </div>
+
+          </div>
+
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Explore the world, create beautiful memories, and travel with your soul mate.
+          </p>
+
+          <div class="flex gap-3 mt-6">
+
+            <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-orange transition">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+
+            <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-orange transition">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+
+            <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-orange transition">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+        <div>
+
+          <h3 class="font-bold text-lg mb-5">Quick Links</h3>
+
+          <div class="space-y-3 text-sm text-slate-400">
+
+            <a href="index.html" class="block hover:text-orange transition">Home</a>
+            <a href="tours.html" class="block hover:text-orange transition">All Tours</a>
+            <a href="#about" class="block hover:text-orange transition">About Us</a>
+            <a href="#why-us" class="block hover:text-orange transition">Why Choose Us</a>
+
+          </div>
+
+        </div>
+
+
+        <!-- SUPPORT -->
+        <div>
+
+          <h3 class="font-bold text-lg mb-5">Support</h3>
+
+          <div class="space-y-3 text-sm text-slate-400">
+
+            <a href="#" class="block hover:text-orange transition">Help Center</a>
+            <a href="#" class="block hover:text-orange transition">Terms & Conditions</a>
+            <a href="#" class="block hover:text-orange transition">Privacy Policy</a>
+            <a href="#" class="block hover:text-orange transition">FAQs</a>
+
+          </div>
+
+        </div>
+
+
+        <!-- CONTACT -->
+        <div>
+
+          <h3 class="font-bold text-lg mb-5">Contact Us</h3>
+
+          <div class="space-y-4 text-sm text-slate-400">
+
+            <p class="flex gap-3">
+              <i class="fa-solid fa-location-dot text-orange mt-1"></i>
+              Ahmedabad, Gujarat, India
+            </p>
+
+            <p class="flex gap-3">
+              <i class="fa-solid fa-envelope text-orange mt-1"></i>
+              hello@twosoulstravel.com
+            </p>
+
+            <p class="flex gap-3">
+              <i class="fa-solid fa-phone text-orange mt-1"></i>
+              +91 90700 07077
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="border-t border-white/10 mt-12 pt-6 text-center text-sm text-slate-500">
+
+        © <span id="year"></span> Two Souls Travel. Made with
+        <i class="fa-solid fa-heart text-orange"></i>
+        for beautiful journeys.
+
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+
+    // Mobile Menu
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+
+
+    // Current Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+
+    // FILTER ELEMENTS
+    const searchForm = document.getElementById("searchForm");
+    const destinationInput = document.getElementById("destinationInput");
+    const categoryInput = document.getElementById("categoryInput");
+    const priceInput = document.getElementById("priceInput");
+    const resetBtn = document.getElementById("resetBtn");
+
+    const tourCards = document.querySelectorAll(".tour-card");
+    const filterResult = document.getElementById("filterResult");
+    const noResult = document.getElementById("noResult");
+
+
+    // FILTER FUNCTION
+    function applyFilters() {
+
+      const destination = destinationInput.value.toLowerCase().trim();
+      const category = categoryInput.value;
+      const maxPrice = priceInput.value;
+
+      let visibleCount = 0;
+
+      tourCards.forEach(card => {
+
+        const cardDestination = card.dataset.destination;
+        const cardCategory = card.dataset.category;
+        const cardPrice = Number(card.dataset.price);
+
+        const destinationMatch =
+          cardDestination.includes(destination);
+
+        const categoryMatch =
+          category === "all" ||
+          cardCategory === category;
+
+        const priceMatch =
+          maxPrice === "all" ||
+          cardPrice <= Number(maxPrice);
+
+        if (
+          destinationMatch &&
+          categoryMatch &&
+          priceMatch
+        ) {
+
+          card.classList.remove("hidden-card");
+          visibleCount++;
+
+        } else {
+
+          card.classList.add("hidden-card");
+
+        }
+
+      });
+
+
+      // RESULT MESSAGE
+      if (visibleCount === 0) {
+
+        noResult.classList.remove("hidden");
+
+        filterResult.textContent =
+          "No destinations found";
+
+      } else {
+
+        noResult.classList.add("hidden");
+
+        filterResult.textContent =
+          `Showing ${visibleCount} destination(s)`;
+
+      }
+
+    }
+
+
+    // FORM SUBMIT
+    searchForm.addEventListener("submit", function(event) {
+
+      event.preventDefault();
+
+      applyFilters();
+
+      document.getElementById("featured").scrollIntoView({
+        behavior: "smooth"
+      });
+
+    });
+
+
+    // LIVE DESTINATION SEARCH
+    destinationInput.addEventListener("input", applyFilters);
+
+
+    // CATEGORY CHANGE
+    categoryInput.addEventListener("change", applyFilters);
+
+
+    // PRICE CHANGE
+    priceInput.addEventListener("change", applyFilters);
+
+
+    // RESET FILTERS
+    resetBtn.addEventListener("click", function() {
+
+      destinationInput.value = "";
+      categoryInput.value = "all";
+      priceInput.value = "all";
+
+      applyFilters();
+
+    });
+
+
+    // INITIAL FILTER
+    applyFilters();
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Bookings | Two Souls Travel</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .booking-card {
+      transition: all 0.3s ease;
+    }
+
+    .booking-card:hover {
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-gray-800">
+
+  <!-- NAVBAR -->
+  <header class="bg-[#0B1F3A] text-white sticky top-0 z-50 shadow-lg">
+
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+      <a href="index.html" class="flex items-center gap-3">
+
+        <img
+          src="./image/logo.png"
+          class="w-12 h-12 object-contain"
+          alt="Two Souls Travel">
+
+        <div>
+          <h1 class="text-xl font-bold">
+            Two Souls Travel
+          </h1>
+
+          <p class="text-xs text-sky-300">
+            Travel Together, Create Memories
+          </p>
+        </div>
+
+      </a>
+
+      <div class="hidden md:flex gap-7 items-center">
+
+        <a href="index.html"
+          class="hover:text-sky-300 transition">
+          Home
+        </a>
+
+        <a href="tours.html"
+          class="hover:text-sky-300 transition">
+          Tours
+        </a>
+
+        <a href="booking.html"
+          class="hover:text-sky-300 transition">
+          Booking
+        </a>
+
+        <a href="my-bookings.html"
+          class="text-sky-300 font-semibold">
+          My Bookings
+        </a>
+
+        <a href="login.html"
+          class="hover:text-sky-300 transition">
+          Login
+        </a>
+
+      </div>
+
+    </nav>
+
+  </header>
+
+
+  <!-- PAGE HERO -->
+  <section class="bg-gradient-to-r from-[#0B1F3A] to-sky-700 text-white">
+
+    <div class="max-w-7xl mx-auto px-6 py-16 text-center">
+
+      <p class="text-sky-200 font-semibold uppercase tracking-widest">
+        Your Travel Records
+      </p>
+
+      <h1 class="text-4xl md:text-6xl font-bold mt-4">
+        My Bookings
+      </h1>
+
+      <p class="max-w-3xl mx-auto mt-5 text-slate-200 text-lg">
+        View your tour bookings, travel dates, traveller count,
+        total amount and current booking status.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- MAIN -->
+  <main class="max-w-7xl mx-auto px-6 py-14">
+
+
+    <!-- BOOKING COUNT -->
+    <div
+      id="bookingSummary"
+      class="hidden mb-8 bg-white rounded-2xl shadow-md p-5">
+
+      <div class="flex flex-col sm:flex-row justify-between gap-3">
+
+        <div>
+          <p class="text-sm text-gray-500">
+            Total Bookings
+          </p>
+
+          <p
+            id="bookingCount"
+            class="text-2xl font-bold text-[#0B1F3A]">
+            0
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 text-sm">
+
+          <span
+            class="bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">
+            Booked
+          </span>
+
+          <span
+            class="bg-red-100 text-red-700 px-3 py-1 rounded-full font-semibold">
+            Cancelled
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- EMPTY STATE -->
+    <div
+      id="emptyState"
+      class="hidden text-center bg-white rounded-3xl shadow-lg p-12 md:p-16">
+
+      <div class="text-sky-500 text-6xl mb-6">
+        <i class="fa-solid fa-suitcase-rolling"></i>
+      </div>
+
+      <h2 class="text-3xl font-bold text-[#0B1F3A] mb-3">
+        No Bookings Yet
+      </h2>
+
+      <p class="text-gray-500 max-w-xl mx-auto mb-7">
+        You don't have any tour bookings yet.
+        Explore our destinations and book your next journey.
+      </p>
+
+      <a
+        href="tours.html"
+        class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-7 py-3 rounded-full font-semibold transition">
+
+        <i class="fa-solid fa-compass"></i>
+        Explore Tours
+
+      </a>
+
+    </div>
+
+
+    <!-- BOOKINGS -->
+    <div
+      id="bookingsContainer"
+      class="space-y-8">
+    </div>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="bg-[#0B1F3A] text-white">
+
+    <div class="max-w-7xl mx-auto px-6 py-8 text-center">
+
+      <p>
+        © <span id="year"></span>
+        Two Souls Travel. All Rights Reserved.
+      </p>
+
+    </div>
+
+  </footer>
+
+
+  <script>
+
+    const bookingsContainer =
+      document.getElementById("bookingsContainer");
+
+    const emptyState =
+      document.getElementById("emptyState");
+
+    const bookingSummary =
+      document.getElementById("bookingSummary");
+
+    const bookingCount =
+      document.getElementById("bookingCount");
+
+
+    /* ----------------------------------
+       READ BOOKINGS FROM LOCAL STORAGE
+    ---------------------------------- */
+
+    function getBookings() {
+
+      try {
+
+        const savedBookings =
+          JSON.parse(
+            localStorage.getItem("myBookings")
+          );
+
+        return Array.isArray(savedBookings)
+          ? savedBookings
+          : [];
+
+      } catch (error) {
+
+        return [];
+
+      }
+
+    }
+
+
+    /* ----------------------------------
+       PRICE FORMAT
+    ---------------------------------- */
+
+    function formatPrice(amount) {
+
+      return "₹" +
+        Number(amount || 0).toLocaleString("en-IN");
+
+    }
+
+
+    /* ----------------------------------
+       DATE FORMAT
+    ---------------------------------- */
+
+    function formatDate(dateString) {
+
+      if (!dateString) {
+        return "Not provided";
+      }
+
+      const date =
+        new Date(dateString + "T00:00:00");
+
+      if (Number.isNaN(date.getTime())) {
+        return dateString;
+      }
+
+      return date.toLocaleDateString(
+        "en-IN",
+        {
+          day: "2-digit",
+          month: "long",
+          year: "numeric"
+        }
+      );
+
+    }
+
+
+    /* ----------------------------------
+       ESCAPE HTML
+       Prevents user-entered text from
+       being inserted as HTML.
+    ---------------------------------- */
+
+    function escapeHTML(value) {
+
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* ----------------------------------
+       CANCEL BOOKING
+       BOOKED -> CANCELLED
+    ---------------------------------- */
+
+    function cancelBooking(index) {
+
+      const bookings =
+        getBookings();
+
+      if (
+        !Number.isInteger(index) ||
+        index < 0 ||
+        index >= bookings.length
+      ) {
+        return;
+      }
+
+
+      /* Only Booked bookings can be cancelled */
+
+      if (
+        bookings[index].status !== "Booked"
+      ) {
+        return;
+      }
+
+
+      const confirmed =
+        window.confirm(
+          "Are you sure you want to cancel this booking?"
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      /* Change status */
+
+      bookings[index].status =
+        "Cancelled";
+
+
+      /* Save updated bookings */
+
+      localStorage.setItem(
+        "myBookings",
+        JSON.stringify(bookings)
+      );
+
+
+      /* Refresh display */
+
+      renderBookings();
+
+    }
+
+
+    /* ----------------------------------
+       DISPLAY BOOKINGS
+    ---------------------------------- */
+
+    function renderBookings() {
+
+      const bookings =
+        getBookings();
+
+
+      bookingsContainer.innerHTML = "";
+
+
+      /* EMPTY STATE */
+
+      if (bookings.length === 0) {
+
+        emptyState.classList.remove("hidden");
+
+        bookingSummary.classList.add("hidden");
+
+        return;
+
+      }
+
+
+      emptyState.classList.add("hidden");
+
+      bookingSummary.classList.remove("hidden");
+
+      bookingCount.textContent =
+        bookings.length;
+
+
+      /* DISPLAY EACH BOOKING */
+
+      bookings.forEach((booking, index) => {
+
+        const status =
+          booking.status === "Cancelled"
+            ? "Cancelled"
+            : "Booked";
+
+
+        const isCancelled =
+          status === "Cancelled";
+
+
+        const card =
+          document.createElement("article");
+
+
+        card.className =
+          "booking-card bg-white rounded-3xl overflow-hidden shadow-lg";
+
+
+        card.innerHTML = `
+
+          <div class="grid grid-cols-1 lg:grid-cols-[300px_1fr]">
+
+
+            <!-- TOUR IMAGE -->
+
+            <div class="relative">
+
+              ${
+                booking.image
+                  ? `
+                    <img
+                      src="${escapeHTML(booking.image)}"
+                      alt="${escapeHTML(booking.tourName || "Tour")}"
+                      class="w-full h-full min-h-[300px] object-cover">
+                    `
+                  : `
+                    <div
+                      class="w-full h-full min-h-[300px] bg-slate-100 flex items-center justify-center text-sky-500 text-6xl">
+                      <i class="fa-solid fa-image"></i>
+                    </div>
+                    `
+              }
+
+
+              <!-- STATUS BADGE -->
+
+              <div class="absolute top-5 left-5">
+
+                ${
+                  isCancelled
+                    ? `
+                      <span
+                        class="inline-flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                        Cancelled
+                      </span>
+                      `
+                    : `
+                      <span
+                        class="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Booked
+                      </span>
+                      `
+                }
+
+              </div>
+
+            </div>
+
+
+            <!-- BOOKING DETAILS -->
+
+            <div class="p-7 md:p-8">
+
+
+              <!-- TOUR HEADER -->
+
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-6">
+
+
+                <div>
+
+                  <p class="text-sky-500 font-semibold uppercase text-sm tracking-wide">
+                    Tour Booking
+                  </p>
+
+                  <h2
+                    class="text-2xl md:text-3xl font-bold text-[#0B1F3A] mt-1">
+                    ${escapeHTML(
+                      booking.tourName || "Tour"
+                    )}
+                  </h2>
+
+                  <p class="text-gray-500 mt-1">
+                    <i class="fa-solid fa-location-dot text-sky-500 mr-1"></i>
+                    ${escapeHTML(
+                      booking.destination || "India"
+                    )}
+                  </p>
+
+                </div>
+
+
+                <!-- BOOKING ID -->
+
+                <div
+                  class="bg-slate-50 rounded-xl px-4 py-3">
+
+                  <p class="text-xs text-gray-500">
+                    Booking ID
+                  </p>
+
+                  <p
+                    class="font-bold text-[#0B1F3A]">
+                    ${escapeHTML(
+                      booking.bookingId || "N/A"
+                    )}
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <!-- INFORMATION GRID -->
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+
+
+                <!-- CUSTOMER NAME -->
+
+                <div class="bg-slate-50 rounded-xl p-4">
+
+                  <p class="text-sm text-gray-500 mb-1">
+
+                    <i class="fa-solid fa-user text-sky-500 mr-1"></i>
+                    Customer Name
+
+                  </p>
+
+                  <p class="font-semibold text-[#0B1F3A] break-words">
+
+                    ${escapeHTML(
+                      booking.fullName || "N/A"
+                    )}
+
+                  </p>
+
+                </div>
+
+
+                <!-- TRAVEL DATE -->
+
+                <div class="bg-slate-50 rounded-xl p-4">
+
+                  <p class="text-sm text-gray-500 mb-1">
+
+                    <i class="fa-solid fa-calendar-days text-sky-500 mr-1"></i>
+                    Travel Date
+
+                  </p>
+
+                  <p class="font-semibold text-[#0B1F3A]">
+
+                    ${escapeHTML(
+                      formatDate(booking.travelDate)
+                    )}
+
+                  </p>
+
+                </div>
+
+
+                <!-- TRAVELLERS -->
+
+                <div class="bg-slate-50 rounded-xl p-4">
+
+                  <p class="text-sm text-gray-500 mb-1">
+
+                    <i class="fa-solid fa-users text-sky-500 mr-1"></i>
+                    Travellers
+
+                  </p>
+
+                  <p class="font-semibold text-[#0B1F3A]">
+
+                    ${escapeHTML(
+                      booking.persons || 0
+                    )}
+
+                  </p>
+
+                </div>
+
+
+                <!-- TOTAL AMOUNT -->
+
+                <div class="bg-orange-50 rounded-xl p-4">
+
+                  <p class="text-sm text-gray-500 mb-1">
+
+                    <i class="fa-solid fa-indian-rupee-sign text-orange-500 mr-1"></i>
+                    Total Amount
+
+                  </p>
+
+                  <p class="font-bold text-xl text-orange-500">
+
+                    ${formatPrice(
+                      booking.totalAmount
+                    )}
+
+                  </p>
+
+                </div>
+
+
+                <!-- TOUR ID -->
+
+                <div class="bg-slate-50 rounded-xl p-4">
+
+                  <p class="text-sm text-gray-500 mb-1">
+
+                    <i class="fa-solid fa-hashtag text-sky-500 mr-1"></i>
+                    Tour ID
+
+                  </p>
+
+                  <p class="font-semibold text-[#0B1F3A]">
+
+                    TOUR-${String(
+                      booking.tourId || 0
+                    ).padStart(3, "0")}
+
+                  </p>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div
+                  class="${
+                    isCancelled
+                      ? "bg-red-50"
+                      : "bg-green-50"
+                  } rounded-xl p-4">
+
+                  <p class="text-sm text-gray-500 mb-1">
+
+                    <i class="fa-solid fa-circle-info ${
+                      isCancelled
+                        ? "text-red-500"
+                        : "text-green-500"
+                    } mr-1"></i>
+
+                    Booking Status
+
+                  </p>
+
+                  <p
+                    class="font-bold ${
+                      isCancelled
+                        ? "text-red-600"
+                        : "text-green-600"
+                    }">
+
+                    ${status}
+
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <!-- ACTION AREA -->
+
+              <div
+                class="border-t border-gray-200 pt-6 flex flex-col sm:flex-row gap-3">
+
+
+                ${
+                  !isCancelled
+                    ? `
+                      <button
+                        type="button"
+                        onclick="cancelBooking(${index})"
+                        class="inline-flex justify-center items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-full font-semibold transition">
+
+                        <i class="fa-solid fa-ban"></i>
+                        Cancel Booking
+
+                      </button>
+                      `
+                    : `
+                      <div
+                        class="inline-flex items-center gap-2 bg-red-50 text-red-600 px-6 py-3 rounded-full font-semibold">
+
+                        <i class="fa-solid fa-circle-xmark"></i>
+                        Booking Cancelled
+
+                      </div>
+                      `
+                }
+
+
+                <a
+                  href="tours.html"
+                  class="inline-flex justify-center items-center gap-2 bg-[#0B1F3A] hover:bg-sky-700 text-white px-6 py-3 rounded-full font-semibold transition">
+
+                  <i class="fa-solid fa-compass"></i>
+                  Explore More Tours
+
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        `;
+
+
+        bookingsContainer.appendChild(card);
+
+      });
+
+    }
+
+
+    /* ----------------------------------
+       YEAR
+    ---------------------------------- */
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+
+    /* ----------------------------------
+       INITIAL LOAD
+    ---------------------------------- */
+
+    renderBookings();
+
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Login | Two Souls Travel</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: "#0B1F3A",
+            sky: "#38BDF8",
+            orange: "#F59E0B",
+            cream: "#F8FAFC"
+          }
+        }
+      }
+    }
+  </script>
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    .hero-bg {
+      background:
+        linear-gradient(
+          120deg,
+          rgba(11, 31, 58, 0.92) 0%,
+          rgba(11, 31, 58, 0.75) 55%,
+          rgba(11, 31, 58, 0.55) 100%
+        ),
+        url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2000&q=85");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .input-icon:focus-within i { color: #38BDF8; }
+
+    .shake { animation: shake 0.4s; }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    .spinner {
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .tab-btn {
+      transition: all 0.2s ease;
+    }
+    .tab-btn.active {
+      background: #0B1F3A;
+      color: white;
+    }
+    .subtab-btn.active {
+      color: #0B1F3A;
+      border-bottom: 2px solid #F59E0B;
+    }
+
+    .otp-box {
+      width: 48px;
+      height: 54px;
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body class="bg-cream text-slate-800">
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="absolute top-0 left-0 w-full z-50">
+    <nav class="max-w-7xl mx-auto px-5 lg:px-8 py-5">
+      <div class="flex items-center justify-between">
+
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg overflow-hidden">
+            <img src="./image/logo.png" alt="Two Souls Travel Logo" class="w-full h-full object-contain p-1" />
+          </div>
+          <div class="text-white">
+            <h1 class="font-bold text-lg tracking-wide">TWO SOULS</h1>
+            <p class="text-[10px] tracking-[4px] text-sky">TRAVEL</p>
+          </div>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8 text-white text-sm font-medium">
+          <a href="index.html" class="hover:text-orange transition">Home</a>
+          <a href="tours.html" class="hover:text-orange transition">Tours</a>
+          <a href="tour-details.html?id=1" class="hover:text-orange transition">Tour-Details</a>
+          <a href="booking.html" class="hover:text-orange transition">Booking</a>
+          <a href="my-bookings.html" class="hover:text-orange transition">My-Booking</a>
+          <a href="login.html" class="text-orange">Login</a>
+        </div>
+
+        <div class="hidden md:block">
+          <a href="tours.html" class="bg-orange hover:bg-amber-500 text-white px-5 py-3 rounded-full text-sm font-semibold transition shadow-lg">
+            Explore Tours
+            <i class="fa-solid fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <button id="menuBtn" class="md:hidden text-white text-2xl">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+      </div>
+
+      <div id="mobileMenu" class="hidden md:hidden mt-5 glass rounded-2xl p-5 text-white space-y-4">
+        <a href="index.html" class="block">Home</a>
+        <a href="tours.html" class="block">Tours</a>
+        <a href="booking.html" class="block">Booking</a>
+        <a href="my-bookings.html" class="block">My-Booking</a>
+        <a href="login.html" class="block text-orange">Login</a>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- ================= AUTH SECTION ================= -->
+  <section class="hero-bg min-h-screen flex items-center justify-center px-5 py-28">
+
+    <div class="w-full max-w-5xl grid lg:grid-cols-2 gap-0 bg-white rounded-3xl shadow-2xl overflow-hidden">
+
+      <!-- LEFT: WELCOME PANEL -->
+      <div class="hidden lg:flex flex-col justify-between relative bg-navy p-10 text-white">
+
+        <div class="absolute inset-0 opacity-20">
+          <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1000&q=85" class="w-full h-full object-cover" alt="Couple traveling" />
+        </div>
+
+        <div class="relative z-10">
+          <div class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-6">
+            <i class="fa-solid fa-heart text-orange"></i>
+            <span class="text-sm">Two Souls. One Beautiful Journey.</span>
+          </div>
+
+          <h2 id="leftHeading" class="text-3xl font-extrabold leading-tight">
+            Welcome Back,
+            <br />
+            <span class="text-sky">Traveler.</span>
+          </h2>
+
+          <p id="leftSubtext" class="mt-5 text-slate-300 leading-relaxed max-w-sm">
+            Sign in to manage your bookings, track your journeys and pick up
+            right where your last adventure left off.
+          </p>
+        </div>
+
+        <div class="relative z-10 flex gap-5 mt-10">
+          <div class="glass rounded-2xl p-4">
+            <h3 class="text-xl font-bold">50+</h3>
+            <p class="text-xs text-slate-300">Destinations</p>
+          </div>
+          <div class="glass rounded-2xl p-4">
+            <h3 class="text-xl font-bold">1200+</h3>
+            <p class="text-xs text-slate-300">Happy Travelers</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: AUTH FORMS -->
+      <div class="p-8 sm:p-12 flex flex-col justify-center">
+
+        <div class="lg:hidden flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 rounded-full bg-navy flex items-center justify-center shadow-lg overflow-hidden">
+            <img src="./image/logo.png" alt="Two Souls Travel Logo" class="w-full h-full object-contain p-1" />
+          </div>
+          <div>
+            <h1 class="font-bold text-navy tracking-wide">TWO SOULS</h1>
+            <p class="text-[9px] tracking-[4px] text-sky">TRAVEL</p>
+          </div>
+        </div>
+
+        <!-- MAIN TABS: LOGIN / REGISTER -->
+        <div class="grid grid-cols-2 bg-slate-100 rounded-full p-1.5 mb-8">
+          <button id="mainTabLogin" class="tab-btn active rounded-full py-2.5 text-sm font-bold">
+            Login
+          </button>
+          <button id="mainTabRegister" class="tab-btn rounded-full py-2.5 text-sm font-bold text-slate-500">
+            Register
+          </button>
+        </div>
+
+
+        <!-- =========== LOGIN PANEL =========== -->
+        <div id="loginPanel" class="panel active">
+
+          <span class="text-orange font-bold text-sm uppercase tracking-widest">Member Login</span>
+          <h2 class="text-3xl font-extrabold text-navy mt-3">Sign In To Continue</h2>
+
+          <!-- SUB TABS: EMAIL / MOBILE -->
+          <div class="flex gap-6 mt-6 border-b border-slate-200">
+            <button id="subTabEmail" class="subtab-btn active pb-3 text-sm font-bold text-navy">
+              <i class="fa-solid fa-envelope mr-1.5"></i> Email
+            </button>
+            <button id="subTabMobile" class="subtab-btn pb-3 text-sm font-bold text-slate-400">
+              <i class="fa-solid fa-mobile-screen mr-1.5"></i> Mobile Number
+            </button>
+          </div>
+
+          <!-- ALERT -->
+          <div id="loginAlert" class="hidden mt-5 flex items-center gap-3 bg-red-50 text-red-600 border border-red-200 rounded-xl px-4 py-3 text-sm">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span id="loginAlertText">Please enter valid details.</span>
+          </div>
+
+          <!-- ---- EMAIL LOGIN FORM ---- -->
+          <form id="emailLoginForm" class="space-y-5 mt-6" novalidate>
+
+            <div>
+              <label class="text-xs font-semibold text-slate-500 mb-2 block">Email Address</label>
+              <div class="relative input-icon">
+                <i class="fa-solid fa-envelope absolute left-4 top-4 text-slate-400 transition"></i>
+                <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="email"
+                  class="w-full border border-slate-200 rounded-xl py-3.5 pl-11 pr-4 outline-none focus:border-sky transition" required />
+              </div>
+              <p id="emailError" class="hidden text-xs text-red-500 mt-1.5">Please enter a valid email address.</p>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <label class="text-xs font-semibold text-slate-500 block">Password</label>
+                <a href="#" class="text-xs font-semibold text-sky hover:underline">Forgot password?</a>
+              </div>
+              <div class="relative input-icon">
+                <i class="fa-solid fa-lock absolute left-4 top-4 text-slate-400 transition"></i>
+                <input type="password" id="passwordInput" placeholder="Enter your password" autocomplete="current-password"
+                  class="w-full border border-slate-200 rounded-xl py-3.5 pl-11 pr-11 outline-none focus:border-sky transition" required />
+                <button type="button" id="togglePassword" class="absolute right-4 top-4 text-slate-400 hover:text-navy" tabindex="-1">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+              <p id="passwordError" class="hidden text-xs text-red-500 mt-1.5">Password must be at least 6 characters.</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <input type="checkbox" id="rememberMe" class="w-4 h-4 rounded border-slate-300 text-orange focus:ring-orange" />
+              <label for="rememberMe" class="text-sm text-slate-600">Remember me on this device</label>
+            </div>
+
+            <button type="submit" id="loginBtn"
+              class="w-full flex items-center justify-center gap-2 bg-navy hover:bg-slate-800 text-white py-4 rounded-xl font-semibold transition shadow-lg">
+              <span id="loginBtnText">Sign In</span>
+            </button>
+
+          </form>
+
+          <!-- ---- MOBILE LOGIN FORM (OTP) ---- -->
+          <div id="mobileLoginForm" class="hidden mt-6 space-y-5">
+
+            <div id="mobileStep1">
+              <label class="text-xs font-semibold text-slate-500 mb-2 block">Mobile Number</label>
+              <div class="flex gap-3">
+                <div class="flex items-center gap-2 border border-slate-200 rounded-xl px-4 text-slate-600 font-semibold">
+                  <i class="fa-solid fa-flag text-orange"></i> +91
+                </div>
+                <div class="relative input-icon flex-1">
+                  <i class="fa-solid fa-mobile-screen absolute left-4 top-4 text-slate-400 transition"></i>
+                  <input type="tel" id="mobileInput" placeholder="98765 43210" maxlength="10"
+                    class="w-full border border-slate-200 rounded-xl py-3.5 pl-11 pr-4 outline-none focus:border-sky transition" />
+                </div>
+              </div>
+              <p id="mobileError" class="hidden text-xs text-red-500 mt-1.5">Please enter a valid 10-digit mobile number.</p>
+
+              <button type="button" id="sendOtpBtn"
+                class="w-full flex items-center justify-center gap-2 bg-navy hover:bg-slate-800 text-white py-4 rounded-xl font-semibold transition shadow-lg mt-5">
+                <span id="sendOtpBtnText">Send OTP</span>
+              </button>
+            </div>
+
+            <div id="mobileStep2" class="hidden">
+              <div class="flex items-center justify-between mb-2">
+                <label class="text-xs font-semibold text-slate-500 block">Enter 4-Digit OTP</label>
+                <button type="button" id="editNumberBtn" class="text-xs font-semibold text-sky hover:underline">Edit number</button>
+              </div>
+              <p class="text-sm text-slate-500 mb-4">
+                OTP sent to <span id="otpMobileDisplay" class="font-semibold text-navy">+91 XXXXXXXXXX</span>
+              </p>
+
+              <div class="flex gap-3 justify-center">
+                <input maxlength="1" class="otp-box border border-slate-200 rounded-xl outline-none focus:border-sky otp-digit" />
+                <input maxlength="1" class="otp-box border border-slate-200 rounded-xl outline-none focus:border-sky otp-digit" />
+                <input maxlength="1" class="otp-box border border-slate-200 rounded-xl outline-none focus:border-sky otp-digit" />
+                <input maxlength="1" class="otp-box border border-slate-200 rounded-xl outline-none focus:border-sky otp-digit" />
+              </div>
+              <p id="otpError" class="hidden text-xs text-red-500 mt-3 text-center">Please enter the 4-digit OTP.</p>
+
+              <p class="text-center text-sm text-slate-500 mt-4">
+                Didn't receive it? <button type="button" id="resendOtpBtn" class="text-orange font-semibold hover:underline">Resend OTP</button>
+              </p>
+
+              <button type="button" id="verifyOtpBtn"
+                class="w-full flex items-center justify-center gap-2 bg-navy hover:bg-slate-800 text-white py-4 rounded-xl font-semibold transition shadow-lg mt-5">
+                <span id="verifyOtpBtnText">Verify & Sign In</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- DIVIDER -->
+          <div class="flex items-center gap-3 my-7">
+            <div class="flex-1 h-px bg-slate-200"></div>
+            <span class="text-xs text-slate-400 font-semibold">OR CONTINUE WITH</span>
+            <div class="flex-1 h-px bg-slate-200"></div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <button class="flex items-center justify-center gap-2 border border-slate-200 rounded-xl py-3 font-semibold text-sm hover:bg-slate-50 transition">
+              <i class="fa-brands fa-google text-orange"></i> Google
+            </button>
+            <button class="flex items-center justify-center gap-2 border border-slate-200 rounded-xl py-3 font-semibold text-sm hover:bg-slate-50 transition">
+              <i class="fa-brands fa-facebook-f text-sky"></i> Facebook
+            </button>
+          </div>
+
+          <p class="text-center text-sm text-slate-500 mt-7">
+            Don't have an account? <button type="button" id="goToRegister" class="text-orange font-semibold hover:underline">Create one</button>
+          </p>
+
+        </div>
+
+
+        <!-- =========== REGISTER PANEL =========== -->
+        <div id="registerPanel" class="panel">
+
+          <span class="text-orange font-bold text-sm uppercase tracking-widest">Join Us</span>
+          <h2 class="text-3xl font-extrabold text-navy mt-3">Create Your Account</h2>
+          <p class="text-slate-500 mt-2 mb-6">Sign up to start planning your next journey.</p>
+
+          <div id="registerAlert" class="hidden mb-5 flex items-center gap-3 bg-red-50 text-red-600 border border-red-200 rounded-xl px-4 py-3 text-sm">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span id="registerAlertText">Please fix the highlighted fields below.</span>
+          </div>
+
+          <form id="registerForm" class="space-y-5" novalidate>
+
+            <div>
+              <label class="text-xs font-semibold text-slate-500 mb-2 block">Full Name</label>
+              <div class="relative input-icon">
+                <i class="fa-solid fa-user absolute left-4 top-4 text-slate-400 transition"></i>
+                <input type="text" id="regName" placeholder="Your full name"
+                  class="w-full border border-slate-200 rounded-xl py-3.5 pl-11 pr-4 outline-none focus:border-sky transition" />
+              </div>
+              <p id="regNameError" class="hidden text-xs text-red-500 mt-1.5">Please enter your full name.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label class="text-xs font-semibold text-slate-500 mb-2 block">Email Address</label>
+                <div class="relative input-icon">
+                  <i class="fa-solid fa-envelope absolute left-4 top-4 text-slate-400 transition"></i>
+                  <input type="email" id="regEmail" placeholder="you@example.com"
+                    class="w-full border border-slate-200 rounded-xl py-3.5 pl-11 pr-4 outline-none focus:border-sky transition" />
+                </div>
+                <p id="regEmailError" class="hidden text-xs text-red-500 mt-1.5">Enter a valid email.</p>
+              </div>
+
+              <div>
+                <label class="text-xs font-semibold text-slate-500 mb-2 block">Mobile Number</label>
+                <div class="relative input-icon">
+                  <i class="fa-solid fa-mobile-screen absolute left-4 top-4 text-slate-400 transition"></i>
+                  <input type="tel" id="regMobile" placeholder="98765 43210" maxlength="10"
+                    class="w-full border border-slate-200 rounded-xl py-3.5 pl-11 pr-4 outline-none focus:border-sky transition" />
+                </div>
+                <p id="regMobileError" class="hidden text-xs text-red-500 mt-1.5">Enter a valid 10-digit number.</p>
+              </div>
+            </div>
+
+            <div>
+              <label class="text-xs font-semibold text-slate-500 mb-2 block">Password</label>
+              <div class="relative input-icon">
+                <i class="fa-solid fa-lock absolute left-4 top-4 text-slate-400 transition"></i>
+                <input type="password" id="regPassword" placeholder="Create a password"
+                  class="w-full border border-slate-200 rounded-xl py-3.5 pl-11 pr-4 outline-none focus:border-sky transition" />
+              </div>
+              <p id="regPasswordError" class="hidden text-xs text-red-500 mt-1.5">At least 6 characters.</p>
+            </div>
+
+            <div>
+              <label class="text-xs font-semibold text-slate-500 mb-2 block">Confirm Password</label>
+              <div class="relative input-icon">
+                <i class="fa-solid fa-lock absolute left-4 top-4 text-slate-400 transition"></i>
+                <input type="password" id="regConfirmPassword" placeholder="Re-enter your password"
+                  class="w-full border border-slate-200 rounded-xl py-3.5 pl-11 pr-4 outline-none focus:border-sky transition" />
+              </div>
+              <p id="regConfirmError" class="hidden text-xs text-red-500 mt-1.5">Passwords do not match.</p>
+            </div>
+
+            <div class="flex items-start gap-2">
+              <input type="checkbox" id="agreeTerms" class="w-4 h-4 mt-0.5 rounded border-slate-300 text-orange focus:ring-orange" />
+              <label for="agreeTerms" class="text-sm text-slate-600">
+                I agree to the <a href="#" class="text-orange font-semibold hover:underline">Terms & Conditions</a> and <a href="#" class="text-orange font-semibold hover:underline">Privacy Policy</a>.
+              </label>
+            </div>
+            <p id="agreeError" class="hidden text-xs text-red-500 -mt-3">Please accept the terms to continue.</p>
+
+            <button type="submit" id="registerBtn"
+              class="w-full flex items-center justify-center gap-2 bg-navy hover:bg-slate-800 text-white py-4 rounded-xl font-semibold transition shadow-lg">
+              <span id="registerBtnText">Create Account</span>
+            </button>
+
+          </form>
+
+          <p class="text-center text-sm text-slate-500 mt-7">
+            Already have an account? <button type="button" id="goToLogin" class="text-orange font-semibold hover:underline">Sign in</button>
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= FOOTER (MINI) ================= -->
+  <footer class="bg-navy text-white">
+    <div class="max-w-7xl mx-auto px-5 py-8 text-center text-sm text-slate-500 border-t border-white/10">
+      © <span id="year"></span> Two Souls Travel. Made with
+      <i class="fa-solid fa-heart text-orange"></i>
+      for beautiful journeys.
+    </div>
+  </footer>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+  // ================= MOBILE NAV MENU =================
+  const menuBtn = document.getElementById("menuBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+
+
+  // ================= CURRENT YEAR =================
+  document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+
+  // ================= MAIN TABS =================
+  const mainTabLogin = document.getElementById("mainTabLogin");
+  const mainTabRegister = document.getElementById("mainTabRegister");
+
+  const loginPanel = document.getElementById("loginPanel");
+  const registerPanel = document.getElementById("registerPanel");
+
+  const leftHeading = document.getElementById("leftHeading");
+  const leftSubtext = document.getElementById("leftSubtext");
+
+
+  function showLoginPanel() {
+    loginPanel.classList.add("active");
+    registerPanel.classList.remove("active");
+
+    mainTabLogin.classList.add("active");
+    mainTabRegister.classList.remove("active");
+
+    mainTabLogin.classList.remove("text-slate-500");
+    mainTabRegister.classList.add("text-slate-500");
+
+    leftHeading.innerHTML =
+      'Welcome Back,<br /><span class="text-sky">Traveler.</span>';
+
+    leftSubtext.textContent =
+      "Sign in to manage your bookings, track your journeys and pick up right where your last adventure left off.";
+  }
+
+
+  function showRegisterPanel() {
+    registerPanel.classList.add("active");
+    loginPanel.classList.remove("active");
+
+    mainTabRegister.classList.add("active");
+    mainTabLogin.classList.remove("active");
+
+    mainTabRegister.classList.remove("text-slate-500");
+    mainTabLogin.classList.add("text-slate-500");
+
+    leftHeading.innerHTML =
+      'Start Your Story,<br /><span class="text-sky">Together.</span>';
+
+    leftSubtext.textContent =
+      "Create your free account and unlock personalized trip picks, saved favorites and faster booking.";
+  }
+
+
+  mainTabLogin.addEventListener("click", showLoginPanel);
+  mainTabRegister.addEventListener("click", showRegisterPanel);
+
+  document.getElementById("goToRegister")
+    .addEventListener("click", showRegisterPanel);
+
+  document.getElementById("goToLogin")
+    .addEventListener("click", showLoginPanel);
+
+
+  // ================= LOGIN SUB TABS =================
+  const subTabEmail = document.getElementById("subTabEmail");
+  const subTabMobile = document.getElementById("subTabMobile");
+
+  const emailLoginForm = document.getElementById("emailLoginForm");
+  const mobileLoginForm = document.getElementById("mobileLoginForm");
+
+  const loginAlert = document.getElementById("loginAlert");
+  const loginAlertText = document.getElementById("loginAlertText");
+
+
+  subTabEmail.addEventListener("click", () => {
+    subTabEmail.classList.add("active");
+    subTabMobile.classList.remove("active");
+
+    subTabEmail.classList.remove("text-slate-400");
+    subTabMobile.classList.add("text-slate-400");
+
+    emailLoginForm.classList.remove("hidden");
+    mobileLoginForm.classList.add("hidden");
+
+    loginAlert.classList.add("hidden");
+  });
+
+
+  subTabMobile.addEventListener("click", () => {
+    subTabMobile.classList.add("active");
+    subTabEmail.classList.remove("active");
+
+    subTabMobile.classList.remove("text-slate-400");
+    subTabEmail.classList.add("text-slate-400");
+
+    mobileLoginForm.classList.remove("hidden");
+    emailLoginForm.classList.add("hidden");
+
+    loginAlert.classList.add("hidden");
+  });
+
+
+  // ================= HELPER FUNCTIONS =================
+
+  function getUsers() {
+    try {
+      const users = JSON.parse(localStorage.getItem("twoSoulsUsers"));
+      return Array.isArray(users) ? users : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+
+  function saveUsers(users) {
+    localStorage.setItem(
+      "twoSoulsUsers",
+      JSON.stringify(users)
+    );
+  }
+
+
+  function showSuccessAlert(message) {
+    loginAlertText.textContent = message;
+
+    loginAlert.classList.remove(
+      "hidden",
+      "bg-red-50",
+      "text-red-600",
+      "border-red-200"
+    );
+
+    loginAlert.classList.add(
+      "bg-sky-50",
+      "text-sky-700",
+      "border-sky-200"
+    );
+  }
+
+
+  function showErrorAlert(message) {
+    loginAlertText.textContent = message;
+
+    loginAlert.classList.remove(
+      "hidden",
+      "bg-sky-50",
+      "text-sky-700",
+      "border-sky-200"
+    );
+
+    loginAlert.classList.add(
+      "bg-red-50",
+      "text-red-600",
+      "border-red-200"
+    );
+  }
+
+
+  function showRegisterError(message) {
+    registerAlertText.textContent = message;
+
+    registerAlert.classList.remove(
+      "hidden",
+      "bg-sky-50",
+      "text-sky-700",
+      "border-sky-200"
+    );
+
+    registerAlert.classList.add(
+      "bg-red-50",
+      "text-red-600",
+      "border-red-200"
+    );
+  }
+
+
+  function showRegisterSuccess(message) {
+    registerAlertText.textContent = message;
+
+    registerAlert.classList.remove(
+      "hidden",
+      "bg-red-50",
+      "text-red-600",
+      "border-red-200"
+    );
+
+    registerAlert.classList.add(
+      "bg-sky-50",
+      "text-sky-700",
+      "border-sky-200"
+    );
+  }
+
+
+  function isValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+  }
+
+
+  function isValidMobile(value) {
+    return /^[6-9]\d{9}$/.test(value.trim());
+  }
+
+
+  function createLoginSession(user, rememberMe = false) {
+
+    const sessionUser = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      mobile: user.mobile,
+      loginTime: new Date().toISOString()
+    };
+
+    sessionStorage.setItem(
+      "currentUser",
+      JSON.stringify(sessionUser)
+    );
+
+    if (rememberMe) {
+      localStorage.setItem(
+        "rememberedUser",
+        JSON.stringify(sessionUser)
+      );
+    } else {
+      localStorage.removeItem("rememberedUser");
+    }
+  }
+
+
+  // ================= EMAIL LOGIN =================
+  const emailInput = document.getElementById("emailInput");
+  const passwordInput = document.getElementById("passwordInput");
+
+  const emailError = document.getElementById("emailError");
+  const passwordError = document.getElementById("passwordError");
+
+  const loginBtn = document.getElementById("loginBtn");
+  const loginBtnText = document.getElementById("loginBtnText");
+
+  const rememberMe = document.getElementById("rememberMe");
+
+  const togglePassword =
+    document.getElementById("togglePassword");
+
+
+  // Show / Hide password
+  togglePassword.addEventListener("click", () => {
+
+    const isPassword =
+      passwordInput.type === "password";
+
+    passwordInput.type =
+      isPassword ? "text" : "password";
+
+    togglePassword.innerHTML = isPassword
+      ? '<i class="fa-solid fa-eye-slash"></i>'
+      : '<i class="fa-solid fa-eye"></i>';
+  });
+
+
+  // Email input validation
+  emailInput.addEventListener("input", () => {
+    emailError.classList.add("hidden");
+    emailInput.classList.remove("border-red-400");
+  });
+
+
+  // Password input validation
+  passwordInput.addEventListener("input", () => {
+    passwordError.classList.add("hidden");
+    passwordInput.classList.remove("border-red-400");
+  });
+
+
+  // EMAIL LOGIN SUBMIT
+  emailLoginForm.addEventListener("submit", function (event) {
+
+    event.preventDefault();
+
+    const email = emailInput.value.trim().toLowerCase();
+    const password = passwordInput.value;
+
+    let hasError = false;
+
+
+    // Validate email
+    if (!isValidEmail(email)) {
+
+      emailError.classList.remove("hidden");
+      emailInput.classList.add("border-red-400");
+
+      hasError = true;
+
+    } else {
+
+      emailError.classList.add("hidden");
+      emailInput.classList.remove("border-red-400");
+    }
+
+
+    // Validate password
+    if (password.length < 6) {
+
+      passwordError.classList.remove("hidden");
+      passwordInput.classList.add("border-red-400");
+
+      hasError = true;
+
+    } else {
+
+      passwordError.classList.add("hidden");
+      passwordInput.classList.remove("border-red-400");
+    }
+
+
+    if (hasError) {
+
+      showErrorAlert(
+        "Please fix the highlighted fields below."
+      );
+
+      return;
+    }
+
+
+    // Get registered users
+    const users = getUsers();
+
+    const user = users.find(
+      item =>
+        item.email.toLowerCase() === email &&
+        item.password === password
+    );
+
+
+    // User not found
+    if (!user) {
+
+      showErrorAlert(
+        "Invalid email or password. Please register first."
+      );
+
+      loginPanel.classList.add("shake");
+
+      setTimeout(() => {
+        loginPanel.classList.remove("shake");
+      }, 400);
+
+      return;
+    }
+
+
+    // Login successful
+    loginBtn.disabled = true;
+
+    loginBtnText.innerHTML =
+      '<span class="spinner inline-block align-middle mr-2"></span> Signing In...';
+
+
+    setTimeout(() => {
+
+      createLoginSession(
+        user,
+        rememberMe.checked
+      );
+
+      loginBtnText.textContent = "Login Successful";
+
+      showSuccessAlert(
+        "Login successful! Redirecting..."
+      );
+
+
+      setTimeout(() => {
+
+        window.location.href =
+          "my-bookings.html";
+
+      }, 700);
+
+    }, 800);
+
+  });
+
+
+  // ================= MOBILE OTP LOGIN =================
+  const mobileInput =
+    document.getElementById("mobileInput");
+
+  const mobileError =
+    document.getElementById("mobileError");
+
+  const sendOtpBtn =
+    document.getElementById("sendOtpBtn");
+
+  const sendOtpBtnText =
+    document.getElementById("sendOtpBtnText");
+
+  const mobileStep1 =
+    document.getElementById("mobileStep1");
+
+  const mobileStep2 =
+    document.getElementById("mobileStep2");
+
+  const otpMobileDisplay =
+    document.getElementById("otpMobileDisplay");
+
+  const editNumberBtn =
+    document.getElementById("editNumberBtn");
+
+  const otpDigits =
+    document.querySelectorAll(".otp-digit");
+
+  const otpError =
+    document.getElementById("otpError");
+
+  const verifyOtpBtn =
+    document.getElementById("verifyOtpBtn");
+
+  const verifyOtpBtnText =
+    document.getElementById("verifyOtpBtnText");
+
+  const resendOtpBtn =
+    document.getElementById("resendOtpBtn");
+
+
+  let generatedOTP = "";
+
+
+  mobileInput.addEventListener("input", () => {
+
+    mobileInput.value =
+      mobileInput.value.replace(/\D/g, "");
+
+    mobileError.classList.add("hidden");
+    mobileInput.classList.remove("border-red-400");
+
+  });
+
+
+  // SEND OTP
+  sendOtpBtn.addEventListener("click", () => {
+
+    const mobile = mobileInput.value.trim();
+
+
+    if (!isValidMobile(mobile)) {
+
+      mobileError.classList.remove("hidden");
+      mobileInput.classList.add("border-red-400");
+
+      return;
+    }
+
+
+    mobileError.classList.add("hidden");
+    mobileInput.classList.remove("border-red-400");
+
+
+    const users = getUsers();
+
+    const user = users.find(
+      item => item.mobile === mobile
+    );
+
+
+    if (!user) {
+
+      showErrorAlert(
+        "This mobile number is not registered. Please create an account first."
+      );
+
+      return;
+    }
+
+
+    // Generate demo OTP
+    generatedOTP =
+      Math.floor(1000 + Math.random() * 9000).toString();
+
+
+    // Save OTP temporarily
+    sessionStorage.setItem(
+      "loginOTP",
+      generatedOTP
+    );
+
+
+    sendOtpBtn.disabled = true;
+
+    sendOtpBtnText.innerHTML =
+      '<span class="spinner inline-block align-middle mr-2"></span> Sending...';
+
+
+    setTimeout(() => {
+
+      sendOtpBtn.disabled = false;
+
+      sendOtpBtnText.textContent =
+        "Send OTP";
+
+      otpMobileDisplay.textContent =
+        "+91 " + mobile;
+
+      mobileStep1.classList.add("hidden");
+      mobileStep2.classList.remove("hidden");
+
+      otpDigits.forEach(box => {
+        box.value = "";
+      });
+
+      otpDigits[0].focus();
+
+
+      // Demo only
+      alert(
+        "Demo OTP: " + generatedOTP
+      );
+
+    }, 700);
+
+  });
+
+
+  // EDIT MOBILE NUMBER
+  editNumberBtn.addEventListener("click", () => {
+
+    mobileStep2.classList.add("hidden");
+    mobileStep1.classList.remove("hidden");
+
+    otpDigits.forEach(
+      digit => digit.value = ""
+    );
+
+    otpError.classList.add("hidden");
+
+  });
+
+
+  // RESEND OTP
+  resendOtpBtn.addEventListener("click", () => {
+
+    const mobile = mobileInput.value.trim();
+
+    generatedOTP =
+      Math.floor(1000 + Math.random() * 9000).toString();
+
+    sessionStorage.setItem(
+      "loginOTP",
+      generatedOTP
+    );
+
+
+    otpDigits.forEach(
+      digit => digit.value = ""
+    );
+
+    otpError.classList.add("hidden");
+
+    otpDigits[0].focus();
+
+    resendOtpBtn.textContent =
+      "OTP Resent!";
+
+
+    alert(
+      "Demo OTP: " + generatedOTP
+    );
+
+
+    setTimeout(() => {
+
+      resendOtpBtn.textContent =
+        "Resend OTP";
+
+    }, 2000);
+
+  });
+
+
+  // OTP AUTO ADVANCE
+  otpDigits.forEach((box, index) => {
+
+    box.addEventListener("input", () => {
+
+      box.value =
+        box.value.replace(/[^0-9]/g, "");
+
+      if (
+        box.value &&
+        index < otpDigits.length - 1
+      ) {
+        otpDigits[index + 1].focus();
+      }
+
+    });
+
+
+    box.addEventListener("keydown", event => {
+
+      if (
+        event.key === "Backspace" &&
+        !box.value &&
+        index > 0
+      ) {
+        otpDigits[index - 1].focus();
+      }
+
+    });
+
+  });
+
+
+  // VERIFY OTP
+  verifyOtpBtn.addEventListener("click", () => {
+
+    const enteredOTP =
+      Array.from(otpDigits)
+        .map(digit => digit.value)
+        .join("");
+
+
+    const savedOTP =
+      sessionStorage.getItem("loginOTP");
+
+
+    if (
+      enteredOTP.length !== 4 ||
+      enteredOTP !== savedOTP
+    ) {
+
+      otpError.textContent =
+        "Invalid OTP. Please enter the correct OTP.";
+
+      otpError.classList.remove("hidden");
+
+      return;
+    }
+
+
+    otpError.classList.add("hidden");
+
+    verifyOtpBtn.disabled = true;
+
+    verifyOtpBtnText.innerHTML =
+      '<span class="spinner inline-block align-middle mr-2"></span> Verifying...';
+
+
+    setTimeout(() => {
+
+      const users = getUsers();
+
+      const user = users.find(
+        item =>
+          item.mobile === mobileInput.value.trim()
+      );
+
+
+      if (!user) {
+
+        verifyOtpBtn.disabled = false;
+
+        verifyOtpBtnText.textContent =
+          "Verify & Sign In";
+
+        showErrorAlert(
+          "User account not found."
+        );
+
+        return;
+      }
+
+
+      createLoginSession(
+        user,
+        true
+      );
+
+
+      sessionStorage.removeItem("loginOTP");
+
+      verifyOtpBtnText.textContent =
+        "Login Successful";
+
+      showSuccessAlert(
+        "OTP verified successfully! Redirecting..."
+      );
+
+
+      setTimeout(() => {
+
+        window.location.href =
+          "my-bookings.html";
+
+      }, 700);
+
+    }, 700);
+
+  });
+
+
+  // ================= REGISTER =================
+  const registerForm =
+    document.getElementById("registerForm");
+
+  const regName =
+    document.getElementById("regName");
+
+  const regEmail =
+    document.getElementById("regEmail");
+
+  const regMobile =
+    document.getElementById("regMobile");
+
+  const regPassword =
+    document.getElementById("regPassword");
+
+  const regConfirmPassword =
+    document.getElementById("regConfirmPassword");
+
+  const agreeTerms =
+    document.getElementById("agreeTerms");
+
+  const registerAlert =
+    document.getElementById("registerAlert");
+
+  const registerAlertText =
+    document.getElementById("registerAlertText");
+
+  const registerBtn =
+    document.getElementById("registerBtn");
+
+  const registerBtnText =
+    document.getElementById("registerBtnText");
+
+
+  const regNameError =
+    document.getElementById("regNameError");
+
+  const regEmailError =
+    document.getElementById("regEmailError");
+
+  const regMobileError =
+    document.getElementById("regMobileError");
+
+  const regPasswordError =
+    document.getElementById("regPasswordError");
+
+  const regConfirmError =
+    document.getElementById("regConfirmError");
+
+  const agreeError =
+    document.getElementById("agreeError");
+
+
+  // Clear errors while typing
+  regName.addEventListener("input", () => {
+    regNameError.classList.add("hidden");
+    regName.classList.remove("border-red-400");
+  });
+
+
+  regEmail.addEventListener("input", () => {
+    regEmailError.classList.add("hidden");
+    regEmail.classList.remove("border-red-400");
+  });
+
+
+  regMobile.addEventListener("input", () => {
+
+    regMobile.value =
+      regMobile.value.replace(/\D/g, "");
+
+    regMobileError.classList.add("hidden");
+    regMobile.classList.remove("border-red-400");
+
+  });
+
+
+  regPassword.addEventListener("input", () => {
+    regPasswordError.classList.add("hidden");
+    regPassword.classList.remove("border-red-400");
+  });
+
+
+  regConfirmPassword.addEventListener("input", () => {
+    regConfirmError.classList.add("hidden");
+    regConfirmPassword.classList.remove("border-red-400");
+  });
+
+
+  agreeTerms.addEventListener("change", () => {
+    agreeError.classList.add("hidden");
+  });
+
+
+  // REGISTER SUBMIT
+  registerForm.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+
+    const name =
+      regName.value.trim();
+
+    const email =
+      regEmail.value.trim().toLowerCase();
+
+    const mobile =
+      regMobile.value.trim();
+
+    const password =
+      regPassword.value;
+
+    const confirmPassword =
+      regConfirmPassword.value;
+
+
+    let hasError = false;
+
+
+    // Name
+    if (name.length < 2) {
+
+      regNameError.classList.remove("hidden");
+      regName.classList.add("border-red-400");
+
+      hasError = true;
+
+    } else {
+
+      regNameError.classList.add("hidden");
+      regName.classList.remove("border-red-400");
+
+    }
+
+
+    // Email
+    if (!isValidEmail(email)) {
+
+      regEmailError.classList.remove("hidden");
+      regEmail.classList.add("border-red-400");
+
+      hasError = true;
+
+    } else {
+
+      regEmailError.classList.add("hidden");
+      regEmail.classList.remove("border-red-400");
+
+    }
+
+
+    // Mobile
+    if (!isValidMobile(mobile)) {
+
+      regMobileError.classList.remove("hidden");
+      regMobile.classList.add("border-red-400");
+
+      hasError = true;
+
+    } else {
+
+      regMobileError.classList.add("hidden");
+      regMobile.classList.remove("border-red-400");
+
+    }
+
+
+    // Password
+    if (password.length < 6) {
+
+      regPasswordError.classList.remove("hidden");
+      regPassword.classList.add("border-red-400");
+
+      hasError = true;
+
+    } else {
+
+      regPasswordError.classList.add("hidden");
+      regPassword.classList.remove("border-red-400");
+
+    }
+
+
+    // Confirm password
+    if (
+      confirmPassword !== password ||
+      confirmPassword.length < 6
+    ) {
+
+      regConfirmError.classList.remove("hidden");
+      regConfirmPassword.classList.add("border-red-400");
+
+      hasError = true;
+
+    } else {
+
+      regConfirmError.classList.add("hidden");
+      regConfirmPassword.classList.remove("border-red-400");
+
+    }
+
+
+    // Terms
+    if (!agreeTerms.checked) {
+
+      agreeError.classList.remove("hidden");
+
+      hasError = true;
+
+    } else {
+
+      agreeError.classList.add("hidden");
+
+    }
+
+
+    if (hasError) {
+
+      showRegisterError(
+        "Please fix the highlighted fields below."
+      );
+
+      return;
+    }
+
+
+    // Get existing users
+    const users = getUsers();
+
+
+    // Check duplicate email
+    const emailExists = users.some(
+      user =>
+        user.email.toLowerCase() === email
+    );
+
+
+    if (emailExists) {
+
+      showRegisterError(
+        "An account with this email already exists."
+      );
+
+      regEmail.classList.add("border-red-400");
+
+      return;
+    }
+
+
+    // Check duplicate mobile
+    const mobileExists = users.some(
+      user =>
+        user.mobile === mobile
+    );
+
+
+    if (mobileExists) {
+
+      showRegisterError(
+        "An account with this mobile number already exists."
+      );
+
+      regMobile.classList.add("border-red-400");
+
+      return;
+    }
+
+
+    // Create new account
+    const newUser = {
+
+      id:
+        "USR-" +
+        Date.now(),
+
+      name: name,
+
+      email: email,
+
+      mobile: mobile,
+
+      password: password,
+
+      createdAt:
+        new Date().toISOString()
+
+    };
+
+
+    registerBtn.disabled = true;
+
+    registerBtnText.innerHTML =
+      '<span class="spinner inline-block align-middle mr-2"></span> Creating Account...';
+
+
+    setTimeout(() => {
+
+      users.push(newUser);
+
+      saveUsers(users);
+
+
+      registerBtn.disabled = false;
+
+      registerBtnText.textContent =
+        "Create Account";
+
+
+      showRegisterSuccess(
+        "Account created successfully! Please sign in."
+      );
+
+
+      // Clear form
+      registerForm.reset();
+
+
+      // Switch to login
+      setTimeout(() => {
+
+        showLoginPanel();
+
+        emailInput.value =
+          newUser.email;
+
+        passwordInput.value = "";
+
+        showSuccessAlert(
+          "Account created successfully. Please sign in."
+        );
+
+      }, 900);
+
+    }, 800);
+
+  });
+
+
+  // ================= REMEMBERED USER =================
+  try {
+
+    const rememberedUser =
+      JSON.parse(
+        localStorage.getItem("rememberedUser")
+      );
+
+
+    if (rememberedUser) {
+
+      emailInput.value =
+        rememberedUser.email;
+
+      rememberMe.checked = true;
+
+    }
+
+  } catch (error) {
+
+    localStorage.removeItem("rememberedUser");
+
+  }
+
+
+  // ================= GOOGLE / FACEBOOK =================
+  // These buttons are kept exactly as they are visually.
+  // Real Google/Facebook authentication requires OAuth/backend setup.
+
+
+  // ================= FORGOT PASSWORD =================
+  const forgotPassword =
+    document.querySelector(
+      'a[href="#"]'
+    );
+
+  if (forgotPassword) {
+
+    forgotPassword.addEventListener("click", event => {
+
+      event.preventDefault();
+
+      showErrorAlert(
+        "Password reset requires backend/email service setup."
+      );
+
+    });
+
+  }
+</script>
+
+</body>
+</html>

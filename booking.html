@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Book Your Tour | Two Souls Travel</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    html { scroll-behavior: smooth; }
+    .booking-card { transition: all 0.3s ease; }
+    .booking-card:hover { transform: translateY(-4px); }
+    input:focus, textarea:focus {
+      border-color: #0ea5e9;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-gray-800">
+
+  <!-- NAVBAR -->
+  <header class="bg-[#0B1F3A] text-white sticky top-0 z-50 shadow-lg">
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="./image/logo.png" class="w-12 h-12 object-contain" alt="Two Souls Travel">
+        <div>
+          <h1 class="text-xl font-bold">Two Souls Travel</h1>
+          <p class="text-xs text-sky-300">Travel Together, Create Memories</p>
+        </div>
+      </a>
+
+      <div class="hidden md:flex gap-7">
+        <a href="index.html" class="hover:text-sky-300 transition">Home</a>
+        <a href="tours.html" class="hover:text-sky-300 transition">Tours</a>
+        <a href="booking.html" class="text-sky-300 font-semibold">Booking</a>
+        <a href="my-bookings.html" class="hover:text-sky-300 transition">My Bookings</a>
+        <a href="login.html" class="hover:text-sky-300 transition">Login</a>
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- PAGE HERO -->
+  <section class="bg-gradient-to-r from-[#0B1F3A] to-sky-700 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-16 text-center">
+      <p class="text-sky-200 font-semibold uppercase tracking-widest">Start Your Journey</p>
+      <h1 class="text-4xl md:text-6xl font-bold mt-4">Book Your Tour</h1>
+      <p class="max-w-3xl mx-auto mt-5 text-slate-200 text-lg">
+        Complete your booking details and reserve your
+        unforgettable journey with Two Souls Travel.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- MAIN -->
+  <main class="max-w-7xl mx-auto px-6 py-14">
+
+    <!-- INVALID TOUR -->
+    <div id="invalidMessage" class="hidden text-center bg-white p-10 rounded-3xl shadow-lg">
+      <div class="text-red-500 text-5xl mb-5">
+        <i class="fa-solid fa-circle-exclamation"></i>
+      </div>
+      <h2 class="text-3xl font-bold text-[#0B1F3A] mb-3">Tour Not Found</h2>
+      <p class="text-gray-600 mb-6">Please select a valid tour from the tours page.</p>
+      <a href="tours.html"
+        class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-7 py-3 rounded-full font-semibold transition">
+        <i class="fa-solid fa-compass"></i>
+        Explore Tours
+      </a>
+    </div>
+
+
+    <!-- BOOKING CONTENT -->
+    <div id="bookingContent" class="hidden">
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+        <!-- SELECTED TOUR -->
+        <section class="booking-card bg-white rounded-3xl overflow-hidden shadow-lg">
+
+          <div class="relative">
+            <img id="tourImage" src="" alt="Tour Image" class="w-full h-80 object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-7">
+              <span id="tourCategory"
+                class="inline-block bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-3"></span>
+              <h2 id="tourName" class="text-3xl md:text-4xl font-bold text-white"></h2>
+            </div>
+          </div>
+
+          <div class="p-7 md:p-8">
+
+            <div class="grid grid-cols-2 gap-4 mb-7">
+
+              <div class="bg-slate-50 rounded-xl p-4">
+                <p class="text-sm text-gray-500 mb-1">
+                  <i class="fa-solid fa-location-dot text-sky-500 mr-1"></i> Destination
+                </p>
+                <p id="tourDestination" class="font-semibold text-[#0B1F3A]"></p>
+              </div>
+
+              <div class="bg-slate-50 rounded-xl p-4">
+                <p class="text-sm text-gray-500 mb-1">
+                  <i class="fa-solid fa-calendar-days text-sky-500 mr-1"></i> Duration
+                </p>
+                <p id="tourDuration" class="font-semibold text-[#0B1F3A]"></p>
+              </div>
+
+              <div class="bg-slate-50 rounded-xl p-4">
+                <p class="text-sm text-gray-500 mb-1">
+                  <i class="fa-solid fa-indian-rupee-sign text-orange-500 mr-1"></i> Price Per Person
+                </p>
+                <p id="tourPrice" class="font-semibold text-orange-500"></p>
+              </div>
+
+              <div class="bg-slate-50 rounded-xl p-4">
+                <p class="text-sm text-gray-500 mb-1">
+                  <i class="fa-solid fa-hashtag text-sky-500 mr-1"></i> Tour ID
+                </p>
+                <p id="tourId" class="font-semibold text-[#0B1F3A]"></p>
+              </div>
+
+            </div>
+
+            <div class="mb-7">
+              <h3 class="text-xl font-bold text-[#0B1F3A] mb-3">
+                <i class="fa-solid fa-circle-info text-sky-500 mr-2"></i>
+                About This Tour
+              </h3>
+              <p id="tourDescription" class="text-gray-600 leading-7"></p>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-bold text-[#0B1F3A] mb-4">
+                <i class="fa-solid fa-route text-orange-500 mr-2"></i>
+                Basic Itinerary
+              </h3>
+              <ul id="tourItinerary" class="space-y-3 text-gray-600"></ul>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- BOOKING FORM -->
+        <section class="booking-card bg-white rounded-3xl shadow-lg p-7 md:p-8">
+
+          <div class="mb-7">
+            <p class="text-sky-500 font-semibold uppercase tracking-wide">Reservation</p>
+            <h2 class="text-3xl font-bold text-[#0B1F3A] mt-2">Booking Information</h2>
+            <p class="text-gray-500 mt-2">Fill in your details to reserve this tour.</p>
+          </div>
+
+          <form id="bookingForm" class="space-y-5">
+
+            <!-- FULL NAME -->
+            <div>
+              <label for="fullName" class="block font-semibold text-[#0B1F3A] mb-2">Full Name</label>
+              <div class="relative">
+                <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-sky-500"></i>
+                <input type="text" id="fullName" required minlength="2"
+                  placeholder="Enter your full name"
+                  class="w-full border border-gray-300 rounded-xl pl-11 pr-4 py-3 outline-none transition">
+              </div>
+            </div>
+
+            <!-- EMAIL -->
+            <div>
+              <label for="email" class="block font-semibold text-[#0B1F3A] mb-2">Email Address</label>
+              <div class="relative">
+                <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-sky-500"></i>
+                <input type="email" id="email" required
+                  placeholder="Enter your email"
+                  class="w-full border border-gray-300 rounded-xl pl-11 pr-4 py-3 outline-none transition">
+              </div>
+            </div>
+
+            <!-- PHONE -->
+            <div>
+              <label for="mobile" class="block font-semibold text-[#0B1F3A] mb-2">Phone Number</label>
+              <div class="relative">
+                <i class="fa-solid fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-sky-500"></i>
+                <input type="tel" id="mobile" required inputmode="numeric"
+                  pattern="[0-9]{10}" maxlength="10"
+                  placeholder="Enter 10-digit mobile number"
+                  class="w-full border border-gray-300 rounded-xl pl-11 pr-4 py-3 outline-none transition">
+              </div>
+              <p class="text-xs text-gray-500 mt-1">Enter a valid 10-digit mobile number.</p>
+            </div>
+
+            <!-- DATE + TRAVELLERS -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+              <div>
+                <label for="travelDate" class="block font-semibold text-[#0B1F3A] mb-2">Travel Date</label>
+                <input type="date" id="travelDate" required
+                  class="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none transition">
+              </div>
+
+              <div>
+                <label for="persons" class="block font-semibold text-[#0B1F3A] mb-2">Number of Travellers</label>
+                <input type="number" id="persons" min="1" max="50" step="1" value="1" required
+                  class="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none transition">
+              </div>
+
+            </div>
+
+            <!-- PRICE BREAKDOWN -->
+            <div class="bg-sky-50 border border-sky-100 rounded-2xl p-5">
+              <h3 class="font-bold text-lg text-[#0B1F3A] mb-4">Price Breakdown</h3>
+
+              <div class="space-y-3">
+
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-600">Price Per Traveller</span>
+                  <span id="breakdownPrice" class="font-semibold text-[#0B1F3A]">₹0</span>
+                </div>
+
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-600">Number of Travellers</span>
+                  <span id="breakdownPersons" class="font-semibold text-[#0B1F3A]">1</span>
+                </div>
+
+                <div class="border-t border-sky-200 pt-3 flex justify-between items-center">
+                  <span class="font-bold text-[#0B1F3A]">Total Amount</span>
+                  <span id="totalAmount" class="text-2xl md:text-3xl font-bold text-orange-500">₹0</span>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- SUBMIT -->
+            <button type="submit"
+              class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 rounded-full transition shadow-md">
+              <i class="fa-solid fa-calendar-check mr-2"></i>
+              Confirm Booking
+            </button>
+
+          </form>
+
+
+          <!-- SUCCESS MESSAGE -->
+          <div id="successMessage" class="hidden mt-6 bg-green-50 border border-green-200 rounded-2xl p-6">
+
+            <div class="flex items-start gap-4">
+
+              <div class="text-green-600 text-3xl">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+
+              <div class="flex-1">
+
+                <h3 class="text-2xl font-bold text-green-700 mb-2">Booking Successful!</h3>
+                <p class="text-gray-600 mb-4">Your tour has been booked successfully.</p>
+
+                <div class="bg-white rounded-xl p-4 mb-4">
+                  <p class="text-sm text-gray-500">Booking ID</p>
+                  <p id="successBookingId" class="text-lg font-bold text-[#0B1F3A]"></p>
+                </div>
+
+                <div class="bg-white rounded-xl p-4 mb-4">
+                  <div class="flex justify-between items-center">
+                    <span class="text-gray-500">Booking Status</span>
+                    <span class="bg-green-100 text-green-700 px-4 py-1 rounded-full text-sm font-bold">Booked</span>
+                  </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-4">
+                  <h4 class="font-bold text-[#0B1F3A] mb-3">Booking Price Breakdown</h4>
+
+                  <div class="space-y-2 text-sm">
+                    <div class="flex justify-between">
+                      <span class="text-gray-500">Tour Price</span>
+                      <span id="successPrice" class="font-semibold"></span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-500">Travellers</span>
+                      <span id="successPersons" class="font-semibold"></span>
+                    </div>
+                    <div class="border-t pt-2 flex justify-between">
+                      <span class="font-bold text-[#0B1F3A]">Total Amount</span>
+                      <span id="successTotal" class="font-bold text-orange-500"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <a href="my-bookings.html"
+                  class="mt-5 inline-flex items-center gap-2 bg-[#0B1F3A] hover:bg-sky-700 text-white px-6 py-3 rounded-full font-semibold transition">
+                  <i class="fa-solid fa-ticket"></i>
+                  View My Bookings
+                </a>
+
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+    </div>
+
+  </main>
+
+
+
+
+  <!-- BOOKING CONFIRMATION POPUP -->
+  <div id="bookingModal"
+    class="hidden fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl">
+
+      <div class="bg-gradient-to-r from-[#0B1F3A] to-sky-700 text-white p-7 text-center">
+        <div class="mx-auto w-16 h-16 rounded-full bg-green-500 flex items-center justify-center text-3xl mb-4">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <h2 class="text-3xl font-bold">Booking Confirmed!</h2>
+        <p class="text-slate-200 mt-2">Your tour has been booked successfully.</p>
+      </div>
+
+      <div class="p-6 md:p-8">
+        <div class="flex items-center justify-between gap-4 bg-green-50 border border-green-200 rounded-2xl p-4 mb-6">
+          <div>
+            <p class="text-sm text-gray-500">Booking ID</p>
+            <p id="modalBookingId" class="font-bold text-[#0B1F3A]"></p>
+          </div>
+          <span class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-bold">
+            <i class="fa-solid fa-circle-check mr-1"></i> Booked
+          </span>
+        </div>
+
+        <div class="flex items-center gap-4 mb-6">
+          <img id="modalTourImage" src="" alt="Tour"
+            class="w-24 h-20 rounded-xl object-cover">
+          <div>
+            <p class="text-sky-500 text-sm font-semibold uppercase">Tour</p>
+            <h3 id="modalTourName" class="text-xl font-bold text-[#0B1F3A]"></h3>
+            <p id="modalDestination" class="text-gray-500 text-sm"></p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="bg-slate-50 rounded-xl p-4">
+            <p class="text-sm text-gray-500 mb-1"><i class="fa-solid fa-user text-sky-500 mr-1"></i> Customer</p>
+            <p id="modalCustomer" class="font-semibold text-[#0B1F3A]"></p>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-4">
+            <p class="text-sm text-gray-500 mb-1"><i class="fa-solid fa-calendar-days text-sky-500 mr-1"></i> Travel Date</p>
+            <p id="modalTravelDate" class="font-semibold text-[#0B1F3A]"></p>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-4">
+            <p class="text-sm text-gray-500 mb-1"><i class="fa-solid fa-users text-sky-500 mr-1"></i> Travellers</p>
+            <p id="modalPersons" class="font-semibold text-[#0B1F3A]"></p>
+          </div>
+          <div class="bg-orange-50 rounded-xl p-4">
+            <p class="text-sm text-gray-500 mb-1"><i class="fa-solid fa-indian-rupee-sign text-orange-500 mr-1"></i> Total Amount</p>
+            <p id="modalTotal" class="font-bold text-xl text-orange-500"></p>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-col sm:flex-row gap-3">
+          <button type="button" id="closeBookingModal"
+            class="flex-1 border-2 border-gray-200 hover:bg-gray-100 text-gray-700 px-6 py-3 rounded-full font-semibold transition">
+            Close
+          </button>
+          <a href="my-bookings.html"
+            class="flex-1 inline-flex justify-center items-center gap-2 bg-[#0B1F3A] hover:bg-sky-700 text-white px-6 py-3 rounded-full font-semibold transition">
+            <i class="fa-solid fa-ticket"></i>
+            View My Bookings
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#0B1F3A] text-white">
+    <div class="max-w-7xl mx-auto px-6 py-8 text-center">
+      <p>© <span id="year"></span> Two Souls Travel. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+
+  <script>
+
+    const tours = [
+
+      {
+        id: 1,
+        name: "Manali Tour",
+        destination: "Manali, Himachal Pradesh",
+        state: "Himachal Pradesh",
+        category: "Mountains",
+        image: "./image/manali.jpg",
+        price: 12999,
+        description: "Explore beautiful Himalayan mountains, peaceful valleys, ancient temples and adventure locations around Manali.",
+        itinerary: [
+          "Day 1: Arrival → Hotel Check-in → Hadimba Temple → Old Manali",
+          "Day 2: Solang Valley → Adventure Activities → Beas River",
+          "Day 3: Atal Tunnel / Mountain Region → Local Market",
+          "Day 4: Breakfast → Checkout → Departure"
+        ]
+      },
+
+      {
+        id: 2,
+        name: "Goa Tour",
+        destination: "Goa, India",
+        state: "India",
+        category: "Beach",
+        image: "./image/goa.jpg",
+        price: 14999,
+        description: "Enjoy famous beaches, historic forts, churches, coastal views, local food and the relaxed lifestyle of Goa.",
+        itinerary: [
+          "Day 1: Arrival → Hotel → Calangute Beach → Baga Beach",
+          "Day 2: Fort Aguada → Candolim Beach → Anjuna Beach",
+          "Day 3: Old Goa Churches → Panaji → Dona Paula",
+          "Day 4: Beach Walk → Shopping → Checkout → Departure"
+        ]
+      },
+
+      {
+        id: 3,
+        name: "Jaipur Tour",
+        destination: "Jaipur, Rajasthan",
+        state: "Rajasthan",
+        category: "Heritage",
+        image: "./image/jaipur.jpg",
+        price: 11999,
+        description: "Discover royal palaces, historic forts, colorful bazaars and the rich heritage of Rajasthan.",
+        itinerary: [
+          "Day 1: Arrival → Amber Fort → Jal Mahal → Local Market",
+          "Day 2: City Palace → Jantar Mantar → Hawa Mahal → Johari Bazaar",
+          "Day 3: Breakfast → Shopping → Checkout → Departure"
+        ]
+      },
+
+      {
+        id: 4,
+        name: "Kashmir Tour",
+        destination: "Kashmir, Jammu & Kashmir",
+        state: "Jammu & Kashmir",
+        category: "Mountains",
+        image: "./image/kashmir.jpg",
+        price: 18999,
+        description: "Experience beautiful valleys, Dal Lake, Gulmarg, Pahalgam and breathtaking Himalayan landscapes.",
+        itinerary: [
+          "Day 1: Arrival → Houseboat → Dal Lake Shikara Ride",
+          "Day 2: Srinagar → Gulmarg → Valley Walk",
+          "Day 3: Pahalgam → Betaab Valley → Aru Valley",
+          "Day 4: Nishat Bagh → Shalimar Bagh → Local Market",
+          "Day 5: Breakfast → Checkout → Airport"
+        ]
+      },
+
+      {
+        id: 5,
+        name: "Kerala Tour",
+        destination: "Kerala, India",
+        state: "India",
+        category: "Nature",
+        image: "./image/kerala.jpg",
+        price: 16999,
+        description: "Enjoy Kerala's backwaters, tea plantations, lush green landscapes, traditional houseboats and cultural experiences.",
+        itinerary: [
+          "Day 1: Arrival → Fort Kochi → Chinese Fishing Nets → Marine Drive",
+          "Day 2: Kochi → Munnar → Tea Gardens → Waterfalls",
+          "Day 3: Eravikulam Park → Mattupetty Dam → Echo Point",
+          "Day 4: Munnar → Alleppey → Houseboat Cruise",
+          "Day 5: Breakfast → Checkout → Kochi Departure"
+        ]
+      },
+
+      {
+        id: 6,
+        name: "Udaipur Tour",
+        destination: "Udaipur, Rajasthan",
+        state: "Rajasthan",
+        category: "Heritage",
+        image: "./image/udaipur.jpg",
+        price: 9999,
+        description: "Explore beautiful lakes, royal palaces, temples and the historic charm of Udaipur.",
+        itinerary: [
+          "Day 1: Arrival → City Palace → Jagdish Temple → Local Market",
+          "Day 2: Saheliyon Ki Bari → Sajjangarh → Lake Pichola Boat Ride",
+          "Day 3: Breakfast → Shopping → Checkout → Departure"
+        ]
+      },
+
+      {
+        id: 7,
+        name: "Rishikesh Tour",
+        destination: "Rishikesh, Uttarakhand",
+        state: "Uttarakhand",
+        category: "Adventure",
+        image: "./image/rishikesh.jpg",
+        price: 7999,
+        description: "Enjoy yoga, spirituality, river rafting, camping, waterfalls and peaceful riverside experiences.",
+        itinerary: [
+          "Day 1: Arrival → Laxman Jhula → Beatles Ashram → Triveni Ghat",
+          "Day 2: River Rafting → Neer Waterfall → Riverside Camping",
+          "Day 3: Yoga → Breakfast → Checkout → Departure"
+        ]
+      },
+
+      {
+        id: 8,
+        name: "Darjeeling Tour",
+        destination: "Darjeeling, West Bengal",
+        state: "West Bengal",
+        category: "Mountains",
+        image: "./image/darjeeling.jpg",
+        price: 15999,
+        description: "Explore Darjeeling's tea gardens, Himalayan views, historic Toy Train and famous viewpoints.",
+        itinerary: [
+          "Day 1: Arrival → Hotel → Mall Road → Chowrasta",
+          "Day 2: Tiger Hill → Batasia Loop → Ghoom Monastery → Tea Estate",
+          "Day 3: Toy Train → Himalayan Institute → Zoo",
+          "Day 4: Breakfast → Checkout → Departure"
+        ]
+      },
+
+      {
+        id: 9,
+        name: "Andaman Tour",
+        destination: "Andaman Islands, India",
+        state: "India",
+        category: "Beach",
+        image: "./image/andaman.jpg",
+        price: 24999,
+        description: "Discover tropical beaches, coral reefs, marine life, snorkeling, island adventures and peaceful coastal landscapes.",
+        itinerary: [
+          "Day 1: Arrival → Cellular Jail → Light and Sound Show",
+          "Day 2: Ferry → Havelock → Radhanagar Beach",
+          "Day 3: Elephant Beach → Snorkeling → Coral Reef Activities",
+          "Day 4: Ferry → Ross Island → North Bay → Shopping",
+          "Day 5: Breakfast → Checkout → Airport"
+        ]
+      },
+
+      {
+        id: 10,
+        name: "Varanasi Tour",
+        destination: "Varanasi, Uttar Pradesh",
+        state: "Uttar Pradesh",
+        category: "Spiritual",
+        image: "./image/varanasi.jpg",
+        price: 8999,
+        description: "Experience the ancient ghats, temples, Ganga River, spiritual traditions and famous Ganga Aarti of Varanasi.",
+        itinerary: [
+          "Day 1: Arrival → Dashashwamedh Ghat → Ganga Aarti",
+          "Day 2: Morning Boat Ride → Kashi Vishwanath → Sarnath",
+          "Day 3: Breakfast → Local Shopping → Checkout → Departure"
+        ]
+      },
+
+      {
+        id: 11,
+        name: "Agra Tour",
+        destination: "Agra, Uttar Pradesh",
+        state: "Uttar Pradesh",
+        category: "Heritage",
+        image: "./image/agra.jpg",
+        price: 6999,
+        description: "Explore the Taj Mahal, Agra Fort, Mehtab Bagh and the historic Mughal heritage of Agra.",
+        itinerary: [
+          "Day 1: Arrival → Taj Mahal → Agra Fort → Local Market",
+          "Day 2: Mehtab Bagh → Marble Market → Checkout → Departure"
+        ]
+      },
+
+      {
+        id: 12,
+        name: "Amritsar Tour",
+        destination: "Amritsar, Punjab",
+        state: "Punjab",
+        category: "Spiritual",
+        image: "./image/amritsar.jpg",
+        price: 7999,
+        description: "Discover the Golden Temple, Jallianwala Bagh, Partition Museum and the cultural heritage of Amritsar.",
+        itinerary: [
+          "Day 1: Arrival → Golden Temple → Jallianwala Bagh → Partition Museum",
+          "Day 2: Breakfast → Wagah Border → Local Shopping → Departure"
+        ]
+      }
+
+    ];
+
+
+    /* URL PARAMETER */
+    const params = new URLSearchParams(window.location.search);
+
+    /* FIX: agar URL me id hi nahi hai (navbar se direct aaye) to tours page par bhej do */
+    if (!params.has("id")) {
+      window.location.replace("tours.html");
+    }
+
+    const selectedId = Number(params.get("id"));
+    const selectedTour = tours.find(tour => tour.id === selectedId);
+
+
+    /* ELEMENTS */
+    const bookingContent = document.getElementById("bookingContent");
+    const invalidMessage = document.getElementById("invalidMessage");
+    const bookingForm = document.getElementById("bookingForm");
+    const personsInput = document.getElementById("persons");
+    const travelDateInput = document.getElementById("travelDate");
+    const totalAmount = document.getElementById("totalAmount");
+    const breakdownPrice = document.getElementById("breakdownPrice");
+    const breakdownPersons = document.getElementById("breakdownPersons");
+    const successMessage = document.getElementById("successMessage");
+
+    /* BOOKING CONFIRMATION MODAL */
+    const bookingModal = document.getElementById("bookingModal");
+    const closeBookingModal = document.getElementById("closeBookingModal");
+
+    function formatModalDate(dateString) {
+      if (!dateString) return "Not provided";
+      const date = new Date(dateString + "T00:00:00");
+      if (Number.isNaN(date.getTime())) return dateString;
+      return date.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      });
+    }
+
+    function showBookingModal(booking) {
+      document.getElementById("modalBookingId").textContent = booking.bookingId;
+      document.getElementById("modalTourName").textContent = booking.tourName;
+      document.getElementById("modalDestination").textContent = booking.destination;
+      document.getElementById("modalCustomer").textContent = booking.fullName;
+      document.getElementById("modalTravelDate").textContent = formatModalDate(booking.travelDate);
+      document.getElementById("modalPersons").textContent =
+        `${booking.persons} ${booking.persons === 1 ? "Traveller" : "Travellers"}`;
+      document.getElementById("modalTotal").textContent = formatPrice(booking.totalAmount);
+
+      const modalImage = document.getElementById("modalTourImage");
+      modalImage.src = booking.image;
+      modalImage.alt = booking.tourName;
+
+      bookingModal.classList.remove("hidden");
+      document.body.classList.add("overflow-hidden");
+    }
+
+    function hideBookingModal() {
+      bookingModal.classList.add("hidden");
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    closeBookingModal.addEventListener("click", hideBookingModal);
+
+    bookingModal.addEventListener("click", function(event) {
+      if (event.target === bookingModal) {
+        hideBookingModal();
+      }
+    });
+    /* FIX: personSummary hata diya (HTML me ye element tha hi nahi, isse script crash hoti thi) */
+
+
+    /* TODAY DATE */
+    function getTodayDate() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    const todayDate = getTodayDate();
+    travelDateInput.min = todayDate;
+
+
+    /* PRICE FORMAT */
+    function formatPrice(amount) {
+      return "₹" + Number(amount).toLocaleString("en-IN");
+    }
+
+
+    /* VALID TOUR CHECK */
+    if (!selectedTour) {
+
+      invalidMessage.classList.remove("hidden");
+
+    } else {
+
+      bookingContent.classList.remove("hidden");
+
+      /* DISPLAY SELECTED TOUR */
+      document.getElementById("tourImage").src = selectedTour.image;
+      document.getElementById("tourImage").alt = selectedTour.name;
+      document.getElementById("tourCategory").textContent = selectedTour.category;
+      document.getElementById("tourName").textContent = selectedTour.name;
+      document.getElementById("tourDestination").textContent = selectedTour.destination;
+      document.getElementById("tourDuration").textContent =
+        `${selectedTour.itinerary.length} Days / ${selectedTour.itinerary.length - 1} Nights`;
+      document.getElementById("tourPrice").textContent = formatPrice(selectedTour.price);
+      document.getElementById("tourId").textContent =
+        "TOUR-" + String(selectedTour.id).padStart(3, "0");
+      document.getElementById("tourDescription").textContent = selectedTour.description;
+
+
+      /* ITINERARY */
+      const itineraryList = document.getElementById("tourItinerary");
+      itineraryList.innerHTML = "";
+
+      selectedTour.itinerary.forEach(item => {
+        const li = document.createElement("li");
+        li.className = "flex items-start gap-3";
+        li.innerHTML = `
+          <span class="text-sky-500 mt-1">
+            <i class="fa-solid fa-circle-check"></i>
+          </span>
+          <span>${item}</span>
+        `;
+        itineraryList.appendChild(li);
+      });
+
+
+      /* UPDATE PRICE BREAKDOWN */
+      function updateTotal() {
+
+        let persons = Number(personsInput.value);
+
+        if (!Number.isInteger(persons) || persons < 1) {
+          persons = 1;
+        }
+
+        if (persons > 50) {
+          persons = 50;
+          personsInput.value = 50;
+        }
+
+        const total = selectedTour.price * persons;
+
+        breakdownPrice.textContent = formatPrice(selectedTour.price);
+        breakdownPersons.textContent = persons;
+        totalAmount.textContent = formatPrice(total);
+
+      }
+
+      personsInput.addEventListener("input", updateTotal);
+      personsInput.addEventListener("change", updateTotal);
+
+
+      /* DATE VALIDATION */
+      travelDateInput.addEventListener("change", function () {
+
+        const selectedDate = travelDateInput.value;
+
+        if (!selectedDate) {
+          travelDateInput.setCustomValidity("Please select a travel date.");
+          return;
+        }
+
+        if (selectedDate < todayDate) {
+          travelDateInput.setCustomValidity("Travel date cannot be in the past.");
+        } else {
+          travelDateInput.setCustomValidity("");
+        }
+
+      });
+
+
+      /* PERSON VALIDATION */
+      personsInput.addEventListener("input", function () {
+
+        const value = Number(personsInput.value);
+
+        if (!Number.isInteger(value) || value < 1) {
+          personsInput.setCustomValidity("Number of travellers must be at least 1.");
+        } else if (value > 50) {
+          personsInput.setCustomValidity("Maximum 50 travellers are allowed.");
+        } else {
+          personsInput.setCustomValidity("");
+        }
+
+      });
+
+
+      /* INITIAL TOTAL */
+      updateTotal();
+
+
+      /* FORM SUBMIT */
+      bookingForm.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+        /* Validate Date */
+        const selectedDate = travelDateInput.value;
+
+        if (!selectedDate) {
+          travelDateInput.setCustomValidity("Please select a travel date.");
+        } else if (selectedDate < todayDate) {
+          travelDateInput.setCustomValidity("Travel date cannot be in the past.");
+        } else {
+          travelDateInput.setCustomValidity("");
+        }
+
+        /* Validate Travellers */
+        const persons = Number(personsInput.value);
+
+        if (!Number.isInteger(persons) || persons < 1) {
+          personsInput.setCustomValidity("Number of travellers must be at least 1.");
+        } else if (persons > 50) {
+          personsInput.setCustomValidity("Maximum 50 travellers are allowed.");
+        } else {
+          personsInput.setCustomValidity("");
+        }
+
+        /* Browser validation */
+        if (!bookingForm.checkValidity()) {
+          bookingForm.reportValidity();
+          return;
+        }
+
+        /* TOTAL */
+        const total = selectedTour.price * persons;
+
+        /* UNIQUE BOOKING ID */
+        const bookingId = "BK" + Date.now() + Math.floor(Math.random() * 1000);
+
+        /* BOOKING OBJECT */
+        const booking = {
+          bookingId: bookingId,
+          tourId: selectedTour.id,
+          tourName: selectedTour.name,
+          destination: selectedTour.destination,
+          category: selectedTour.category,
+          image: selectedTour.image,
+          duration: `${selectedTour.itinerary.length} Days / ${selectedTour.itinerary.length - 1} Nights`,
+          pricePerPerson: selectedTour.price,
+          fullName: document.getElementById("fullName").value.trim(),
+          email: document.getElementById("email").value.trim(),
+          mobile: document.getElementById("mobile").value.trim(),
+          travelDate: selectedDate,
+          persons: persons,
+          totalAmount: total,
+          bookingDate: new Date().toISOString(),
+          status: "Booked"
+        };
+
+        /* GET OLD BOOKINGS (safe parse) */
+        let existingBookings = [];
+        try {
+          const saved = JSON.parse(localStorage.getItem("myBookings"));
+          if (Array.isArray(saved)) existingBookings = saved;
+        } catch (e) {
+          existingBookings = [];
+        }
+
+        /* SAVE NEW BOOKING */
+        existingBookings.push(booking);
+        localStorage.setItem("myBookings", JSON.stringify(existingBookings));
+
+        /* SAVE CURRENT BOOKING FOR THIS SESSION */
+        sessionStorage.setItem("currentBooking", JSON.stringify(booking));
+
+        /* AFTER SUBMISSION BREAKDOWN */
+        document.getElementById("successBookingId").textContent = bookingId;
+        document.getElementById("successPrice").textContent = formatPrice(selectedTour.price);
+        document.getElementById("successPersons").textContent = persons;
+        document.getElementById("successTotal").textContent = formatPrice(total);
+
+        /* SHOW SUCCESS */
+        successMessage.classList.remove("hidden");
+
+        /* Disable submit after booking */
+        const submitButton = bookingForm.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.classList.add("opacity-60", "cursor-not-allowed");
+        submitButton.innerHTML = `
+          <i class="fa-solid fa-circle-check mr-2"></i>
+          Booking Completed
+        `;
+
+        /* Scroll to success */
+        setTimeout(() => {
+          successMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 100);
+
+        /* SHOW CONFIRMATION POPUP */
+        setTimeout(() => {
+          showBookingModal(booking);
+        }, 250);
+
+      });
+
+    }
+
+
+    /* FOOTER YEAR */
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+  </script>
+
+</body>
+</html>
